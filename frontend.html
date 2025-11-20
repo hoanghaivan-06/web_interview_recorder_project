@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lab: Ghi video & Upload (Tích hợp State)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    video { width: 480px; max-width: 100%; background: #000; border-radius: 8px; }
+    .mirrored { transform: scaleX(-1); } /* Lật video */
+    button { padding: 10px 16px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .log { margin-top: 12px; white-space: pre-wrap; background: #f7f7f7; padding: 10px; border-radius: 8px; }
+    
+    /* CSS cho phần state mới */
+    .state-panel { 
+      background: #eee; 
+      padding: 16px; 
+      border-radius: 8px; 
+      margin-top: 16px;
+      margin-bottom: 24px;
+      border: 1px solid #ddd;
+    }
+    .state-panel h2 { margin-top: 0; }
+    #stateDisplay { font-family: monospace; white-space: pre; background: #fff; padding: 8px; border-radius: 4px; }
+  </style>
+</head>
+
+<body>
+  <h1>Ghi video – Flip Camera – Upload (Tích hợp State)</h1>
+
+  <div class="state-panel">
+    <h2>Trạng thái (Logic từ state.js)</h2>
+    <div class="row" style="margin-bottom: 12px;">
+        <button id="btnPrevQ">Câu trước</button>
+        <button id="btnNextQ">Câu sau</button>
+        <button id="btnMarkAnswered">Đánh dấu đã trả lời</button>
+        <button id="btnToggleRecord">Toggle Cho phép Ghi</button>
+        <button id="btnResetState">Reset State</button>
+    </div>
+    <div id="stateDisplay">Đang tải state...</div>
+  </div>
+  <h2>Phần Ghi Video (Nội dung gốc)</h2>
+  <div class="row" style="margin-bottom: 8px;">
+    <button id="btnInit">1) Xin quyền camera</button>
+    <button id="btnFlip" disabled>Đổi camera (trước/sau)</button>
+    <button id="btnStart" disabled>2) Bắt đầu ghi</button>
+    <button id="btnStop" disabled>3) Dừng ghi</button>
+    <button id="btnUpload" disabled>4) Upload server</button>
+  </div>
+
+  <div class="row">
+    <div>
+      <h3>Preview (đang quay)</h3>
+      <video id="preview" autoplay muted playsinline></video>
+    </div>
+
+    <div>
+      <h3>Video đã ghi</h3>
+      <video id="playback" controls></video>
+      <div id="downloadLink"></div>
+    </div>
+  </div>
+
+  <div class="log" id="log">Log...</div>
+
+  <script>
+    const log = (msg) => {
+      const el = document.getElementById('log');
+      el.textContent = `[${new Date().toLocaleTimeString()}] ${msg}\n` + el.textContent;
+    };
+
+    const TOTAL_QUESTIONS = 5;
+    
+    const quizState = {
+        currentQuestionIndex: 0,
+        answeredQuestions: new Set(), 
+        isRecordingAllowed: false, 
+    
+        getState: function() {
+            return {
+                currentQuestionIndex: this.currentQuestionIndex,
+                answeredQuestions: Array.from(this.answeredQuestions).sort((a,b) => a-b), 
+                totalQuestions: TOTAL_QUESTIONS,
+                isRecordingAllowed: this.isRecordingAllowed
+            };
+        },
+    
+        nextQuestion: function() {
+            if (this.currentQuestionIndex < TOTAL_QUESTIONS - 1) {
+                this.currentQuestionIndex++;
+            } else {
+                log("State: Đã ở câu cuối cùng.");
+            }
+            this.notifyUpdate(); 
+        },
+    
+        prevQuestion: function() {
+            if (this.currentQuestionIndex > 0) {
+                this.currentQuestionIndex--;
+            } else {
+                log("State: Đã ở câu đầu tiên.");
+            }
+            this.notifyUpdate();
+        },
+  
+        markCurrentAsAnswered: function() {
+            this.answeredQuestions.add(this.currentQuestionIndex);
+            log(`State: Đã trả lời câu ${this.currentQuestionIndex + 1}. Tổng số câu đã trả lời: ${this.answeredQuestions.size}`);
+            this.notifyUpdate();
+        },
+    
+        /**
+         * @param {boolean} allowed
+         */
+        setRecordingPermission: function(allowed) {
+            this.isRecordingAllowed = !!allowed;
+            log(`State: Cho phép ghi? ${this.isRecordingAllowed}`);
+            this.notifyUpdate();
+        },
+
+        toggleRecordingPermission: function() {
+            this.setRecordingPermission(!this.isRecordingAllowed);
+        },
+    
+        reset: function() {
+            this.currentQuestionIndex = 0;
+            this.answeredQuestions.clear();
+            this.isRecordingAllowed = false;
+            log("State: Đã reset.");
+            this.notifyUpdate();
+        },
+
+
+        notifyUpdate: function() {
+            updateStateDisplay();
+            checkRecordingButtonStatus();
+        }
+    };
+    
+    const stateDisplay = document.getElementById('stateDisplay');
+    const btnPrevQ = document.getElementById('btnPrevQ');
+    const btnNextQ = document.getElementById('btnNextQ');
+    const btnMarkAnswered = document.getElementById('btnMarkAnswered');
+    const btnToggleRecord = document.getElementById('btnToggleRecord');
+    const btnResetState = document.getElementById('btnResetState');
+
+    function updateStateDisplay() {
+        const state = quizState.getState();
+        stateDisplay.textContent = 
+`Đang ở câu:      ${state.currentQuestionIndex + 1} / ${state.totalQuestions}
+Đã trả lời:    [ ${state.answeredQuestions.map(q => q+1).join(', ')} ]
+Cho phép ghi?   ${state.isRecordingAllowed ? 'CÓ (Đã có thể bấm nút "Bắt đầu ghi")' : 'KHÔNG (Nút "Bắt đầu ghi" đang bị khóa)'}`;
+    }
+
+    btnPrevQ.onclick = () => quizState.prevQuestion();
+    btnNextQ.onclick = () => quizState.nextQuestion();
+    btnMarkAnswered.onclick = () => quizState.markCurrentAsAnswered();
+    btnToggleRecord.onclick = () => quizState.toggleRecordingPermission();
+    btnResetState.onclick = () => quizState.reset();
+
+    const btnInit = document.getElementById('btnInit');
+    const btnFlip = document.getElementById('btnFlip');
+    const btnStart = document.getElementById('btnStart');
+    const btnStop = document.getElementById('btnStop');
+    const btnUpload = document.getElementById('btnUpload');
+    const preview = document.getElementById('preview');
+    const playback = document.getElementById('playback');
+    const downloadLink = document.getElementById('downloadLink');
+
+    let mediaStream = null;
+    let mediaRecorder = null;
+    let chunks = [];
+    let recordedBlob = null;
+    let useFrontCamera = true;
+    function checkRecordingButtonStatus() {
+        if (mediaStream && quizState.getState().isRecordingAllowed && btnStop.disabled) {
+            btnStart.disabled = false;
+        } else {
+            btnStart.disabled = true;
+        }
+    }
+
+    async function initCamera() {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(t => t.stop());
+      }
+
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: useFrontCamera ? "user" : "environment",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: true
+      });
+
+      preview.srcObject = mediaStream;
+
+      if (useFrontCamera) preview.classList.add("mirrored");
+      else preview.classList.remove("mirrored");
+    }
+
+    btnInit.onclick = async () => {
+      try {
+        await initCamera();
+        log("Đã có quyền camera/mic");
+        btnFlip.disabled = false;
+        checkRecordingButtonStatus();
+      } catch (err) {
+        log("Lỗi camera: " + err.message);
+      }
+    };
+
+    btnFlip.onclick = async () => {
+      useFrontCamera = !useFrontCamera;
+      await initCamera();
+      log("Đã đổi camera");
+    };
+
+    btnStart.onclick = async () => {
+      if (!quizState.getState().isRecordingAllowed) {
+        log("Lỗi: State không cho phép ghi!");
+        return;
+      }
+      if (!mediaStream) {
+        log("Lỗi: Chưa xin quyền camera!");
+        return;
+      }
+
+      chunks = [];
+      recordedBlob = null;
+      downloadLink.innerHTML = '';
+
+      let mimeType = '';
+      if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9,opus')) mimeType = 'video/webm;codecs=vp9,opus';
+      else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp8,opus')) mimeType = 'video/webm;codecs=vp8,opus';
+      else if (MediaRecorder.isTypeSupported('video/webm')) mimeType = 'video/webm';
+
+      mediaRecorder = new MediaRecorder(mediaStream, mimeType ? { mimeType } : undefined);
+
+      mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+
+      mediaRecorder.onstart = () => log("Bắt đầu ghi...");
+
+      mediaRecorder.onstop = () => {
+        recordedBlob = new Blob(chunks, { type: 'video/webm' });
+        playback.src = URL.createObjectURL(recordedBlob);
+        btnUpload.disabled = false;
+
+        log(`Đã dừng ghi. Kích thước: ${(recordedBlob.size/1024/1024).toFixed(2)} MB`);
+
+        const a = document.createElement('a');
+        a.href = playback.src;
+        a.download = `recorded_${Date.now()}.webm`;
+        a.textContent = "Tải bản ghi (local)";
+        downloadLink.appendChild(a);
+      };
+
+      mediaRecorder.start(100);
+      btnStart.disabled = true;
+      btnStop.disabled = false;
+    };
+
+    btnStop.onclick = () => {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+      btnStop.disabled = true;
+      checkRecordingButtonStatus();
+    };
+
+    btnUpload.onclick = async () => {
+      if (!recordedBlob) return log("Chưa có video!");
+
+      const form = new FormData();
+      form.append('file', recordedBlob, `client_${Date.now()}.webm`);
+
+      try {
+        const res = await fetch('/api/upload', { method: 'POST', body: form });
+        const data = await res.json();
+
+        log("Upload thành công → " + data.filename);
+
+        if (data.url) {
+          const link = document.createElement('a');
+          link.href = data.url;
+          link.textContent = "Mở video trên server";
+          link.target = "_blank";
+          downloadLink.appendChild(document.createElement('br'));
+          downloadLink.appendChild(link);
+        }
+      } catch (err) {
+        log("Upload lỗi: " + err.message);
+      }
+    };
+
+    updateStateDisplay(); 
+    checkRecordingButtonStatus(); 
+
+  </script>
+</body>
+</html>
