@@ -1,43 +1,44 @@
-const videoQueue = [
-    "intro_vlog.mp4",
-    "gameplay_part1.mkv",
-    "tutorial_react.mov",
-    "funny_cats.mp4",
-    "outro_final.avi"
+const danhSachVideo = [
+    "intro_gioi_thieu.mp3",
+    "cau_hoi_2.mp3",
+    "cau_hoi_3.mp3",
+    "cau_hoi_4.mp3",
+    "cau_hoi_5.mp3"
 ];
 
-const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const choDoi = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-\async function uploadVideo(videoName) {
-    console.log(`\n[START] Preparing to upload: ${videoName}`);
-  
-    let progress = 0;
-    const speed = Math.floor(Math.random() * 20) + 10;
+async function uploadVideo(tenVideo) {
+    console.log(`\n[INFO] Đang chuẩn bị tải lên: ${tenVideo}...`);
+    
+    let tienDo = 0;
+    const tocDo = Math.floor(Math.random() * 15) + 5; 
 
-    while (progress < 100) {
-        await wait(200);
-        progress += speed;
+    while (tienDo < 100) {
+        await choDoi(150);
+        tienDo += tocDo;
         
-        if (progress > 100) progress = 100;
+        if (tienDo > 100) tienDo = 100;
 
-        const barLength = 20;
-        const filledLength = Math.round((progress / 100) * barLength);
-        const bar = '█'.repeat(filledLength) + '-'.repeat(barLength - filledLength);
-        
-        process.stdout.write(`\rUploading: [${bar}] ${progress}%`);
+        const doDaiThanh = 20;
+        const doDaiDaChay = Math.round((tienDo / 100) * doDaiThanh);
+        const thanhBar = '█'.repeat(doDaiDaChay) + '-'.repeat(doDaiThanh - doDaiDaChay);
+    
+        process.stdout.write(`\r ☁️  Đang tải: [${thanhBar}] ${tienDo}%`);
     }
 
-    console.log(`\n[SUCCESS] ${videoName} uploaded successfully! ✅`);
+    console.log(`\n[OK] ✅ Đã tải lên thành công: ${tenVideo}`);
 }
 
-async function startUploadQueue() {
-    console.log("--- 🚀 BATCH UPLOAD STARTED ---");
+async function chayHeThongUpload() {
+    console.log("--- 🚀 BẮT ĐẦU TIẾN TRÌNH UPLOAD HÀNG LOẠT ---");
 
-    for (const video of videoQueue) {
+    for (const video of danhSachVideo) {
         await uploadVideo(video);
+        await choDoi(500);
     }
 
-    console.log("\n--- ✨ ALL UPLOADS FINISHED ---");
+    console.log("\n--- ✨ TẤT CẢ VIDEO ĐÃ ĐƯỢC XỬ LÝ XONG ---");
 }
 
-startUploadQueue();
+chayHeThongUpload();
