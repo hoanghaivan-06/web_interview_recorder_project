@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Recorder</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        video { width: 360px; border: 2px solid #000; border-radius: 6px; }
+        button { padding: 10px 18px; margin: 8px; }
+        #status { font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<h2>Phỏng vấn ghi hình – Demo 5 câu hỏi</h2>
+
+<video id="preview" autoplay playsinline></video>
+
+<h3 id="questionBox"></h3>
+
+<button id="btnStart">Start Recording</button>
+<button id="btnNext" disabled>Next Question</button>
+<button id="btnFinish" disabled>Finish</button>
+
+<div id="status"></div>
+
+<script>
+    // ===============================
+    // 5 CÂU HỎI PHỎNG VẤN
+    // ===============================
+    const questions = [
+        "Câu 1:",
+        "Câu 2:",
+        "Câu 3:",
+        "Câu 4:",
+        "Câu 5:"
+    ];
+
+    let currentQuestion = 0;
+    let mediaStream = null;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+
+    const preview = document.getElementById("preview");
+    const questionBox = document.getElementById("questionBox");
+    const statusBox = document.getElementById("status");
+
+    const btnStart = document.getElementById("btnStart");
+    const btnNext = document.getElementById("btnNext");
+    const btnFinish = document.getElementById("btnFinish");
+
+    questionBox.textContent = questions[currentQuestion];
+
+    // ===============================
+    // XIN QUYỀN CAMERA/MIC
+    // ===============================
+    async function requestCameraAndMic() {
+        try {
+            mediaStream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            });
+            preview.srcObject = mediaStream;
+        } catch (err) {
+            alert("Không thể truy cập camera hoặc micro!");
+            console.error(err);
+        }
+    }
+
+    // ===============================
+    // BẮT ĐẦU GHI
+    // ===============================
+    function startRecording() {
+        recordedChunks = [];
+        statusBox.textContent = "Đang ghi hình...";
+
+        mediaRecorder = new MediaRecorder(mediaStream, {
+            mimeType: "video/webm"
+        });
+
+        mediaRecorder.ondataavailable = e => {
+            if (e.data.size > 0) recordedChunks.push(e.data);
+        };
+
+        mediaRecorder.start();
+    }
+
+    // ===============================
+    // DỪNG GHI → TẠO FILE mp1, mp2, mp3...
+    // ===============================
+    function stopRecordingAndSave() {
+        return new Promise(resolve => {
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: "video/webm" });
+
+                const filename = `mp${currentQuestion + 1}.webm`;
+                const url = URL.createObjectURL(blob);
+
+                // Tải file xuống máy
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = filename;
+                a.click();
+
+                resolve(filename);
+            };
+
+            mediaRecorder.stop();
+        });
+    }
+
+    // ===============================
+    // NÚT START
+    // ===============================
+    btnStart.onclick = async () => {
+        await requestCameraAndMic();
+        startRecording();
+
+        btnStart.disabled = true;
+        btnNext.disabled = false;
+        statusBox.textContent = "Đang ghi hình câu 1...";
+    };
+
+    // ===============================
+    // NÚT NEXT QUESTION
+    // ===============================
+    btnNext.onclick = async () => {
+        statusBox.textContent = "Đang tạo file video...";
+        await stopRecordingAndSave();
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            questionBox.textContent = questions[currentQuestion];
+
+            startRecording();
+            statusBox.textContent = `Đang ghi hình câu ${currentQuestion + 1}...`;
+        }
+
+        if (currentQuestion === questions.length - 1) {
+            btnNext.disabled = true;
+            btnFinish.disabled = false;
+        }
+    };
+
+    // ===============================
+    // NÚT FINISH
+    // ===============================
+    btnFinish.onclick = async () => {
+        statusBox.textContent = "Đang tạo file video cuối...";
+        await stopRecordingAndSave();
+
+        statusBox.textContent = "Hoàn thành buổi phỏng vấn!";
+        btnFinish.disabled = true;
+    };
+</script>
+
+</body>
+</html>
