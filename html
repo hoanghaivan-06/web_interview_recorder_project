@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Record Genz</title>
+
+  <style>
+
+    :root {
+      --bg: #020617;
+      --accent: #6366f1;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --success: #4ade80;
+      --danger: #f87171;
+      --br: 22px;
+    }
+
+    body {
+      margin: 0;
+      padding: 32px 16px;
+      background:
+        radial-gradient(circle at 10% 10%, #1d4ed8 0, transparent 55%),
+        radial-gradient(circle at 90% 90%, #ec4899 0, transparent 50%),
+        var(--bg);
+      font-family: system-ui, sans-serif;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1080px;
+      background: rgba(15,23,42,.8);
+      backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 20px 24px 28px;
+      border: 1px solid rgba(148,163,184,.25);
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h1 span {
+      font-size: 1.9rem;
+    }
+
+    p { color: var(--muted); }
+
+    /* ========= Layout ========= */
+    .layout {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1.45fr 1fr;
+    }
+    @media(max-width:900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: rgba(30,41,59,.85);
+      border: 1px solid rgba(148,163,184,.25);
+      padding: 18px;
+      border-radius: var(--br);
+      box-shadow: 0 14px 30px rgba(0,0,0,.32);
+    }
+
+    h2 {
+      margin: 0 0 10px 0;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* BUTTONS */
+    button {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,.35);
+      background: rgba(79,70,229,.3);
+      color: var(--text);
+      cursor: pointer;
+      font-size: .9rem;
+      transition: .15s;
+    }
+    button:hover:not(:disabled) {
+      background: rgba(129,140,248,.45);
+    }
+    button:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+    .muted { color: var(--muted); }
+
+    /* VIDEO */
+    video {
+      width: 100%;
+      background: #000;
+      border-radius: 16px;
+      border: 1px solid rgba(59,130,246,.5);
+      box-shadow: 0 12px 28px rgba(0,0,0,.45);
+    }
+
+    /* ⭐ Lật gương */
+    .mirrored {
+      transform: scaleX(-1);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media(max-width:900px) {
+      .video-grid { grid-template-columns: 1fr; }
+    }
+
+    /* STATE UI */
+    .dot {
+      width: 28px; height: 28px;
+      border-radius: 999px;
+      background: rgba(148,163,184,.15);
+      border: 1px solid rgba(148,163,184,.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: .15s;
+    }
+    .dot.current {
+      background: rgba(129,140,248,.45);
+      border-color: var(--accent);
+      color: white;
+    }
+    .dot.answered::after {
+      content: "";
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--success);
+      border-radius: 999px;
+      bottom: 2px; right: 2px;
+    }
+
+    #answeredList .chip {
+      display: inline-flex;
+      padding: 3px 7px;
+      background: rgba(148,163,184,.15);
+      border-radius: 999px;
+      margin: 2px;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    #answeredList .done {
+      background: rgba(34,197,94,.25);
+      color: #bbf7d0;
+      border: 1px solid rgba(34,197,94,.6);
+    }
+
+    .log {
+      margin-top: 14px;
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: .79rem;
+      background: rgba(0,0,0,.35);
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(59,130,246,.4);
+    }
+
+    /* BANNER LỖI */
+    #cameraBanner {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(127,29,29,.8);
+      border: 1px solid rgba(248,113,113,.7);
+      border-radius: 999px;
+      color: #fee2e2;
+      font-size: .82rem;
+    }
+    #cameraBanner.show { display: flex; align-items: center; gap: 8px; }
+
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <h1>
+      <span>🎧</span>
+      Record Genz
+    </h1>
+    <p>Dự án quay video Gen Z — lật gương — bao đẹp, bao chất 😎</p>
+
+    <section class="layout">
+
+      <!-- LEFT: RECORD -->
+      <section class="card">
+        <h2>🎥 Điều khiển ghi hình</h2>
+
+        <div class="controls">
+          <button id="btnInit">📸 Xin quyền camera</button>
+          <button id="btnStart" disabled>🎬 Bắt đầu ghi</button>
+          <button id="btnStop" disabled>⏹️ Dừng</button>
+          <button id="btnUpload" disabled>☁️ Upload</button>
+        </div>
+
+        <p class="muted">Sau khi dừng ghi bạn có thể tải bản local hoặc upload lên server.</p>
+
+        <div id="cameraBanner"><span>🚫</span><span id="cameraBannerText"></span></div>
+
+        <div class="video-grid">
+          <div>
+            <p class="muted">Preview (gương)</p>
+            <video id="preview" class="mirrored" autoplay muted playsinline></video>
+          </div>
+
+          <div>
+            <p class="muted">Playback (gương)</p>
+            <video id="playback" class="mirrored" controls></video>
+            <div id="downloadLink" class="muted">Chưa có video.</div>
+          </div>
+        </div>
+
+        <div id="log" class="log">[Log] Khởi động...</div>
+      </section>
+
+      <!-- RIGHT: STATE -->
+      <section class="card">
+        <h2>🧠 Trạng thái bài nói</h2>
+
+        <p class="muted">
+          Câu hiện tại:
+          <strong id="currentQuestionLabel">1</strong>/<span id="totalQuestionLabel">5</span>
+        </p>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin:8px 0;" id="questionDots"></div>
+
+        <div id="recordPermission" class="muted"></div>
+
+        <p class="muted"><strong>Câu đã trả lời:</strong></p>
+        <div id="answeredList"></div>
+      </section>
+
+    </section>
+  </main>
+
+  <script type="module">
+    import {
+      state,
+      setCurrentQuestion,
+      markAnswered,
+      getSnapshot,
+      canRecordCurrentQuestion
+    } from './state.js';
+
+    // ======== DOM ========
+    const logEl = document.getElementById("log");
+    const btnInit = document.getElementById("btnInit");
+    const btnStart = document.getElementById("btnStart");
+    const btnStop = document.getElementById("btnStop");
+    const btnUpload = document.getElementById("btnUpload");
+
+    const preview = document.getElementById("preview");
+    const playback = document.getElementById("playback");
+    const downloadLink = document.getElementById("downloadLink");
+
+    const banner = document.getElementById("cameraBanner");
+    const bannerText = document.getElementById("cameraBannerText");
+
+    const currentQ = document.getElementById("currentQuestionLabel");
+    const totalQ = document.getElementById("totalQuestionLabel");
+    const dots = document.getElementById("questionDots");
+    const answeredList = document.getElementById("answeredList");
+    const recordPermission = document.getElementById("recordPermission");
+
+    // ===== LOG FN =====
+    const log = msg => {
+      logEl.textContent = `[${new Date().toLocaleTimeString()}] ${msg}\n` + logEl.textContent;
+    };
+
+    // ===== RENDER UI =====
+    function renderState() {
+      const snap = getSnapshot();
+      currentQ.textContent = snap.currentQuestion;
+      totalQ.textContent = snap.totalQuestions;
+
+      // Dots
+      dots.innerHTML = "";
+      for (let i = 1; i <= snap.totalQuestions; i++) {
+        const d = document.createElement("div");
+        d.className = "dot" +
+          (i === snap.currentQuestion ? " current" : "") +
+          (snap.answered.includes(i) ? " answered" : "");
+        d.textContent = i;
+        d.onclick = () => {
+          setCurrentQuestion(i);
+          renderState();
+        };
+        dots.appendChild(d);
+      }
+
+      // answered list
+      answeredList.innerHTML = "";
+      if (!snap.answered.length) {
+        answeredList.innerHTML = `<span class="chip">Chưa có</span>`;
+      } else {
+        snap.answered.forEach(q => {
+          const c = document.createElement("span");
+          c.className = "chip done";
+          c.textContent = "Câu " + q;
+          answeredList.appendChild(c);
+        });
+      }
+
+      // permission label
+      recordPermission.textContent =
+        snap.canRecord ?
+        "✔ Có thể ghi câu này" :
+        "✖ Câu này đã upload — không ghi lại";
+    }
+
+    // Default run
+    renderState();
+
+    // ========= CAMERA + MEDIARECORDER =========
+    let mediaStream = null;
+    let mediaRecorder = null;
+    let chunks = [];
+    let recordedBlob = null;
+
+    function showBanner(msg) {
+      bannerText.textContent = msg;
+      banner.classList.add("show");
+    }
+
+    btnInit.onclick = async () => {
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true
+        });
+
+        preview.srcObject = mediaStream;
+        banner.classList.remove("show");
+        log("Đã xin quyền camera & mic ✔");
+
+        if (canRecordCurrentQuestion()) {
+          btnStart.disabled = false;
+        }
+      } catch (err) {
+        log("Lỗi camera: " + err.message);
+        showBanner("Không truy cập được camera: " + err.message);
+      }
+    };
+
+    btnStart.onclick = () => {
+      if (!mediaStream) return;
+
+      recordedBlob = null;
+      chunks = [];
+      downloadLink.innerHTML = "Đang ghi...";
+
+      mediaRecorder = new MediaRecorder(mediaStream);
+      mediaRecorder.ondataavailable = e => chunks.push(e.data);
+
+      mediaRecorder.onstop = () => {
+        recordedBlob = new Blob(chunks, { type: "video/webm" });
+        playback.src = URL.createObjectURL(recordedBlob);
+        btnUpload.disabled = false;
+
+        const a = document.createElement("a");
+        a.href = playback.src;
+        a.download = `recorded_q${state.currentQuestion}.webm`;
+        a.textContent = "Tải video (local)";
+        downloadLink.innerHTML = "";
+        downloadLink.appendChild(a);
+
+        log("Đã dừng ghi.");
+      };
+
+      mediaRecorder.start(100);
+      btnStart.disabled = true;
+      btnStop.disabled = false;
+
+      log("Bắt đầu ghi...");
+    };
+
+    btnStop.onclick = () => {
+      mediaRecorder.stop();
+      btnStop.disabled = true;
+    };
+
+    btnUpload.onclick = async () => {
+      const form = new FormData();
+      form.append("file", recordedBlob, `q${state.currentQuestion}.webm`);
+
+      log("Đang upload...");
+
+      const res = await fetch("/api/upload", { method: "POST", body: form });
+      const data = await res.json();
+
+      log("Upload thành công!");
+      markAnswered(state.currentQuestion);
+      renderState();
+      btnUpload.disabled = true;
+      btnStart.disabled = true;
+    };
+
+  </script>
+</body>
+</html>
