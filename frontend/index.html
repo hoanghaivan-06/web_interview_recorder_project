@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Record Interview</title>
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <main class="app">
+
+    <h1>🎤 Interview Recorder</h1>
+
+    <section class="layout">
+
+      <!-- LEFT: RECORD -->
+      <section class="card">
+        <h2>🎥 Điều khiển ghi hình</h2>
+
+        <div class="controls">
+          <button id="btnInit">📸 Xin quyền camera</button>
+          <button id="btnStart" disabled>🎬 Bắt đầu ghi</button>
+          <button id="btnStop" disabled>⏹️ Dừng</button>
+          <button id="btnUpload" disabled>☁️ Upload</button>
+        </div>
+
+        <div id="cameraBanner" class="hidden">
+          <span>🚫 Không vào được camera</span>
+        </div>
+
+        <div class="video-grid">
+          <div>
+            <p class="muted">Preview</p>
+            <video id="preview" class="mirrored" autoplay muted playsinline></video>
+          </div>
+
+          <div>
+            <p class="muted">Playback</p>
+            <video id="playback" class="mirrored" controls></video>
+            <div id="downloadLink" class="muted">Chưa có video.</div>
+          </div>
+        </div>
+
+        <div id="log" class="log">[Log] Khởi động...</div>
+      </section>
+
+      <!-- RIGHT: STATE -->
+      <section class="card">
+        <h2>🧠 Trạng thái bài nói</h2>
+
+        <p class="muted">
+          Câu hiện tại:
+          <strong id="currentQuestionLabel">1</strong>/<span id="totalQuestionLabel">4</span>
+        </p>
+
+        <div id="questionDots" class="dot-list"></div>
+
+        <p class="muted"><strong>Câu đã trả lời:</strong></p>
+        <div id="answeredList"></div>
+      </section>
+
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
