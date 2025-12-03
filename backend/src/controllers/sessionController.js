@@ -5,15 +5,17 @@ const {
   isValidSessionIdFormat
 } = require("../models/store");
 
-async function startSession(req, res) {
+// POST /api/session/start
+function startSession(req, res) {
   try {
     const { candidate } = req.body || {};
-
-    const session = createSession(candidate);
+    const session = createSession(
+      typeof candidate === "string" ? candidate.trim().slice(0, 200) : null
+    );
 
     return res.status(200).json({
       ok: true,
-      sessionId: session.id,
+      sessionId: session.sessionId,   
       startedAt: session.startedAt
     });
   } catch (err) {
@@ -25,7 +27,8 @@ async function startSession(req, res) {
   }
 }
 
-async function getSessionStatus(req, res) {
+// GET /api/session/:id
+function getSessionStatus(req, res) {
   const { id } = req.params;
 
   if (!isValidSessionIdFormat(id)) {
@@ -43,13 +46,24 @@ async function getSessionStatus(req, res) {
     });
   }
 
+  
+  const publicSession = {
+    sessionId: session.sessionId,
+    candidate: session.candidate || null,
+    startedAt: session.startedAt,
+    endedAt: session.endedAt,
+    answers: session.answers,
+    metadata: session.metadata
+  };
+
   return res.status(200).json({
     ok: true,
-    session
+    session: publicSession
   });
 }
 
-async function endSessionController(req, res) {
+// POST /api/session/end
+function endSessionController(req, res) {
   const { sessionId } = req.body || {};
 
   if (!sessionId) {
@@ -76,7 +90,7 @@ async function endSessionController(req, res) {
 
   return res.status(200).json({
     ok: true,
-    sessionId: session.id,
+    sessionId: session.sessionId,   
     startedAt: session.startedAt,
     endedAt: session.endedAt
   });
@@ -87,3 +101,5 @@ module.exports = {
   getSessionStatus,
   endSessionController
 };
+
+
