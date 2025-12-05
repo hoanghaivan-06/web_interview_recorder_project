@@ -1,4 +1,4 @@
-// backend/server.js (CommonJS - chắc chạy với package.json type: commonjs)
+// backend/server.js
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -9,7 +9,14 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 
-// test route nhanh
+// ROUTES
+const sessionRoutes = require("./src/routes/session");
+const uploadRoutes = require("./src/routes/upload");
+
+app.use("/api/session", sessionRoutes);
+app.use("/api/upload", uploadRoutes);
+
+// Test route
 app.get("/health", (req, res) => res.json({ ok: true }));
 
 const PORT = process.env.PORT || 3000;
