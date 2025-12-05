@@ -1,35 +1,58 @@
-const store = require('../models/store');
+const fs = require("fs");
+const path = require("path");
+const store = require("../models/store");
 
-exports.handleUpload = (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ success: false, message: "No file uploaded" });
-        }
+const UPLOAD_DIR = process.env.UPLOAD_DIR || "uploads/";
 
-        const { sessionId, question } = req.body;
+// đảm bảo thư mục uploads tồn tại
+if (!fs.existsSync(UPLOAD_DIR)) {
+  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+}
 
-        console.log(`File uploaded: ${req.file.filename}`);
+exports.uploadHandler = (req, res) => {
+  try {
+    const file = req.file;
+    const { sessionId, question } = req.body;
 
-        
-        const metadata = {
-            filename: req.file.filename,
-            path: req.file.path,
-            sessionId: sessionId,
-            question: question,
-            createdAt: new Date()
-        };
-
-        store.saveRecording(metadata);
-
-        
-        return res.json({
-            success: true,
-            message: "File uploaded successfully",
-            filePath: req.file.path
-        });
-
-    } catch (error) {
-        console.error("Upload Error:", error);
-        return res.status(500).json({ success: false, message: "Server error" });
+    if (!file) {
+      return res.status(400).json({ ok: false, message: "File required" });
     }
+
+    // generate final filename
+    const timestamp = Date.now();
+    const ext = path.extname(file.originalname) || ".webm";
+    const finalFilename = `${sessionId}_q${question}_${timestamp}${ext}`;
+    const finalPath = path.join(UPLOAD_DIR, finalFilename);
+
+    // move file
+    fs.renameSync(file.path, finalPath);
+
+    const uploadMeta = {
+      filename: finalFilename,
+      sessionId,
+      question: Number(question),
+      size: file.size,
+      uploadedAt: new Date().toISOString()
+    };
+
+    // Lưu vào recordings.json
+    store.appendUpload(uploadMeta);
+
+    // trả đúng API.md
+    return res.status(200).json({
+      ok: true,
+      filename: finalFilename,
+      sessionId,
+      question: Number(question),
+      size: file.size,
+      uploadedAt: uploadMeta.uploadedAt
+    });
+
+  } catch (err) {
+    console.error("Upload error:", err);
+    return res.status(500).json({
+      ok: false,
+      message: "Upload failed"
+    });
+  }
 };
