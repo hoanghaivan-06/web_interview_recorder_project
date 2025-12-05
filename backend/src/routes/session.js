@@ -1,16 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
+
 const {
   startSession,
-  getSessionById,
+  getSessionStatus,
   endSessionController,
-} = require("../controllers/sessionControllers");
+} = require("../controllers/sessionController");
+
 
 router.post("/start", startSession);
 
-router.get("/:id", getSessionById);
+
+router.get("/:id", getSessionStatus);
+
 
 router.post("/end", endSessionController);
+
 
 module.exports = router;
