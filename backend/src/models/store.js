@@ -3,7 +3,7 @@ const path = require("path");
 
 const DATA_FILE = path.join(__dirname, "..", "..", "recordings.json");
 
-// đảm bảo recordings.json tồn tại
+
 function ensureFile() {
   if (!fs.existsSync(DATA_FILE)) {
     const init = { sessions: {}, uploads: [] };
@@ -21,16 +21,12 @@ function writeStore(data) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
-// ===============================
-//      API CHO CONTROLLER
-// ===============================
 
-// format sessionId giống kiểu: sess_ab12cd
 function isValidSessionIdFormat(id) {
   return typeof id === "string" && /^sess_[a-zA-Z0-9_]+$/.test(id);
 }
 
-// tạo session
+
 function createSession(candidate) {
   const data = readStore();
 
@@ -55,13 +51,13 @@ function createSession(candidate) {
   return session;
 }
 
-// lấy session
+
 function getSession(sessionId) {
   const data = readStore();
   return data.sessions[sessionId] || null;
 }
 
-// kết thúc session
+
 function endSession(sessionId) {
   const data = readStore();
   const session = data.sessions[sessionId];
@@ -75,9 +71,30 @@ function endSession(sessionId) {
   return session;
 }
 
+
+function appendUpload(upload) {
+  const data = readStore();
+  data.uploads.push(upload);
+
+  
+  if (data.sessions[upload.sessionId]) {
+    data.sessions[upload.sessionId].answers.push({
+      question: upload.question,
+      filename: upload.filename,
+      size: upload.size,
+      uploadedAt: upload.uploadedAt
+    });
+  }
+
+  writeStore(data);
+}
+
 module.exports = {
   createSession,
   getSession,
   endSession,
-  isValidSessionIdFormat
+  isValidSessionIdFormat,
+  readStore,
+  writeStore,
+  appendUpload
 };
