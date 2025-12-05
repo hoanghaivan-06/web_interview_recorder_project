@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Multer instance (file field is 'file')
+// Multer instance (file field = 'file')
 const { upload } = require('../services/multer'); 
 const { uploadHandler } = require('../controllers/uploadController'); 
 
@@ -10,8 +10,8 @@ const { uploadHandler } = require('../controllers/uploadController');
 const { validateUpload } = require('../middleware/validate');
 
 router.post(
-  '/',                      
-  upload.single('file'),     
+  '/',
+  upload.single('file'),  
   validateUpload,
   uploadHandler
 );
