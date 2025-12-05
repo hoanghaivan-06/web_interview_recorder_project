@@ -18,15 +18,24 @@ exports.uploadHandler = (req, res) => {
       return res.status(400).json({ ok: false, message: "File required" });
     }
 
-    // generate final filename
+    // Tạo file name chuẩn API.md
     const timestamp = Date.now();
     const ext = path.extname(file.originalname) || ".webm";
     const finalFilename = `${sessionId}_q${question}_${timestamp}${ext}`;
     const finalPath = path.join(UPLOAD_DIR, finalFilename);
 
-    // move file
-    fs.renameSync(file.path, finalPath);
+    // Move file từ tmp → uploads
+    try {
+      fs.renameSync(file.path, finalPath);
+    } catch (err) {
+      // nếu rename lỗi → xóa file tmp để không bị rác
+      if (fs.existsSync(file.path)) {
+        fs.unlinkSync(file.path);
+      }
+      throw err;
+    }
 
+    // metadata lưu trong recordings.json
     const uploadMeta = {
       filename: finalFilename,
       sessionId,
@@ -35,10 +44,10 @@ exports.uploadHandler = (req, res) => {
       uploadedAt: new Date().toISOString()
     };
 
-    // Lưu vào recordings.json
+    // Lưu metadata
     store.appendUpload(uploadMeta);
 
-    // trả đúng API.md
+    // Trả đúng format API.md
     return res.status(200).json({
       ok: true,
       filename: finalFilename,
