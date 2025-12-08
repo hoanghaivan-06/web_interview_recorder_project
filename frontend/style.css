@@ -212,3 +212,19 @@ video {
   align-items: center; 
   gap: 8px; 
 }
+
+/* End session button style */
+#btnEndSession {
+  background: #ef4444;
+  border-color: rgba(239,68,68,.6);
+  color: white;
+}
+#btnEndSession:hover:not(:disabled) {
+  background: #f87171;
+}
+
+/* Ended at text */
+#sessionEndedAt {
+  font-size: 0.9rem;
+  color: var(--muted);
+}

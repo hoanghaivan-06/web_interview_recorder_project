@@ -19,12 +19,24 @@
       <section class="card">
         <h2>🎥 Điều khiển ghi hình</h2>
 
+        <!-- NEW: sessionId input -->
+        <div style="margin:8px 0">
+          <label for="sessionIdInput" class="muted" style="display:block;margin-bottom:6px">Session ID (vd: sess_xxx):</label>
+          <input id="sessionIdInput" placeholder="Nhập sessionId từ backend" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(148,163,184,.25);background:transparent;color:var(--text)">
+        </div>
+
         <div class="controls">
           <button id="btnInit">📸 Xin quyền camera</button>
           <button id="btnStart" disabled>🎬 Bắt đầu ghi</button>
           <button id="btnStop" disabled>⏹️ Dừng</button>
           <button id="btnUpload" disabled>☁️ Upload</button>
+
+          <!-- Nút kết thúc phiên (ban đầu disabled, sẽ enable khi đủ câu) -->
+          <button id="btnEndSession" style="background:#ef4444;margin-left:6px" disabled>🔒 Kết thúc phiên</button>
         </div>
+
+        <!-- Hiển thị thời gian kết thúc (nếu có) -->
+        <div id="sessionEndedAt" class="muted" style="margin-top:8px;"></div>
 
         <div id="cameraBanner" class="hidden">
           <span>🚫 Không vào được camera</span>

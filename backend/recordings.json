@@ -1,0 +1,749 @@
+{
+  "sessions": {
+    "sess_mit3qw50_2v99hp": {
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "candidate": "Test",
+      "startedAt": "2025-12-05T16:51:44.820Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mix9v3x1_jnvbxb": {
+      "sessionId": "sess_mix9v3x1_jnvbxb",
+      "candidate": "Test",
+      "startedAt": "2025-12-08T14:54:03.925Z",
+      "endedAt": "2025-12-08T16:11:24.798Z",
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mix9v3x1_jnvbxb_q1_1765208777219.webm",
+          "size": 880268,
+          "uploadedAt": "2025-12-08T15:46:17.225Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mix9v3x1_jnvbxb_q1_1765209993291.webm",
+          "size": 880268,
+          "uploadedAt": "2025-12-08T16:06:33.299Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mix9v3x1_jnvbxb_q1_1765213213706.webm",
+          "size": 4,
+          "uploadedAt": "2025-12-08T17:00:13.708Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mix9v3x1_jnvbxb_q1_1765213452873.webm",
+          "size": 4,
+          "uploadedAt": "2025-12-08T17:04:12.874Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixfhgww_muljzl": {
+      "sessionId": "sess_mixfhgww_muljzl",
+      "candidate": null,
+      "startedAt": "2025-12-08T17:31:25.281Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mixfk5sr_hg4dgh": {
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "candidate": "Test candidate",
+      "startedAt": "2025-12-08T17:33:30.843Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765215330524.webm",
+          "size": 880268,
+          "uploadedAt": "2025-12-08T17:35:30.527Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765215990334.webm",
+          "size": 1562545,
+          "uploadedAt": "2025-12-08T17:46:30.337Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_mixfk5sr_hg4dgh_q2_1765216045082.webm",
+          "size": 770360,
+          "uploadedAt": "2025-12-08T17:47:25.095Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_mixfk5sr_hg4dgh_q3_1765216054151.webm",
+          "size": 605842,
+          "uploadedAt": "2025-12-08T17:47:34.152Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765216057453.webm",
+          "size": 382260,
+          "uploadedAt": "2025-12-08T17:47:37.459Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765216794221.webm",
+          "size": 414410,
+          "uploadedAt": "2025-12-08T17:59:54.223Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_mixfk5sr_hg4dgh_q2_1765216802909.webm",
+          "size": 567426,
+          "uploadedAt": "2025-12-08T18:00:02.912Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_mixfk5sr_hg4dgh_q3_1765216806855.webm",
+          "size": 331408,
+          "uploadedAt": "2025-12-08T18:00:06.861Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765216809795.webm",
+          "size": 300686,
+          "uploadedAt": "2025-12-08T18:00:09.837Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765217393222.webm",
+          "size": 319106,
+          "uploadedAt": "2025-12-08T18:09:53.227Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_mixfk5sr_hg4dgh_q2_1765217399505.webm",
+          "size": 360460,
+          "uploadedAt": "2025-12-08T18:09:59.506Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_mixfk5sr_hg4dgh_q3_1765217404878.webm",
+          "size": 357714,
+          "uploadedAt": "2025-12-08T18:10:04.895Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765217408949.webm",
+          "size": 246092,
+          "uploadedAt": "2025-12-08T18:10:08.952Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765217978251.webm",
+          "size": 182449,
+          "uploadedAt": "2025-12-08T18:19:38.256Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_mixfk5sr_hg4dgh_q2_1765217984499.webm",
+          "size": 236404,
+          "uploadedAt": "2025-12-08T18:19:44.504Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_mixfk5sr_hg4dgh_q3_1765217987457.webm",
+          "size": 243554,
+          "uploadedAt": "2025-12-08T18:19:47.478Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765217990343.webm",
+          "size": 157546,
+          "uploadedAt": "2025-12-08T18:19:50.601Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765217999026.webm",
+          "size": 138992,
+          "uploadedAt": "2025-12-08T18:19:59.028Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765218189018.webm",
+          "size": 287352,
+          "uploadedAt": "2025-12-08T18:23:09.023Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765218664563.webm",
+          "size": 209313,
+          "uploadedAt": "2025-12-08T18:31:04.565Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_mixfk5sr_hg4dgh_q2_1765218669370.webm",
+          "size": 274582,
+          "uploadedAt": "2025-12-08T18:31:09.372Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_mixfk5sr_hg4dgh_q3_1765218673386.webm",
+          "size": 179841,
+          "uploadedAt": "2025-12-08T18:31:13.388Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765218676485.webm",
+          "size": 154219,
+          "uploadedAt": "2025-12-08T18:31:16.501Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765219505212.webm",
+          "size": 269722,
+          "uploadedAt": "2025-12-08T18:45:05.221Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765219523915.webm",
+          "size": 384248,
+          "uploadedAt": "2025-12-08T18:45:23.953Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765219763566.webm",
+          "size": 221525,
+          "uploadedAt": "2025-12-08T18:49:23.573Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765219885368.webm",
+          "size": 341809,
+          "uploadedAt": "2025-12-08T18:51:25.373Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765220040023.webm",
+          "size": 763694,
+          "uploadedAt": "2025-12-08T18:54:00.051Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765220201830.webm",
+          "size": 230971,
+          "uploadedAt": "2025-12-08T18:56:41.842Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixivbou_ltdroc": {
+      "sessionId": "sess_mixivbou_ltdroc",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:06:10.542Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mixivu6d_ikf3oh": {
+      "sessionId": "sess_mixivu6d_ikf3oh",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:06:34.501Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixivu6d_ikf3oh_q1_1765220794641.webm",
+          "size": 1083298,
+          "uploadedAt": "2025-12-08T19:06:34.773Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixiwkex_c0x88o": {
+      "sessionId": "sess_mixiwkex_c0x88o",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:07:08.505Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mixix5f3_jstrrn": {
+      "sessionId": "sess_mixix5f3_jstrrn",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:07:35.727Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mixixnxa_pqexu9": {
+      "sessionId": "sess_mixixnxa_pqexu9",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:07:59.710Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixixnxa_pqexu9_q1_1765220880089.webm",
+          "size": 1315167,
+          "uploadedAt": "2025-12-08T19:08:00.102Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixiy25a_8kpiqj": {
+      "sessionId": "sess_mixiy25a_8kpiqj",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:08:18.142Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixiy25a_8kpiqj_q1_1765220898536.webm",
+          "size": 1010874,
+          "uploadedAt": "2025-12-08T19:08:18.543Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixj2xuq_onk2av": {
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:12:05.858Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765221185474.webm",
+          "size": 1325759,
+          "uploadedAt": "2025-12-08T19:13:05.489Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765221375260.webm",
+          "size": 880268,
+          "uploadedAt": "2025-12-08T19:16:15.277Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765221948832.webm",
+          "size": 1706807,
+          "uploadedAt": "2025-12-08T19:25:48.856Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765221986481.webm",
+          "size": 1597940,
+          "uploadedAt": "2025-12-08T19:26:26.494Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765222007286.webm",
+          "size": 901322,
+          "uploadedAt": "2025-12-08T19:26:47.304Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765222614644.webm",
+          "size": 1037918,
+          "uploadedAt": "2025-12-08T19:36:54.664Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765222678074.webm",
+          "size": 1067884,
+          "uploadedAt": "2025-12-08T19:37:58.101Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixjabwm_wm5bxu": {
+      "sessionId": "sess_mixjabwm_wm5bxu",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:17:50.662Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mixjaoyu_un6w02": {
+      "sessionId": "sess_mixjaoyu_un6w02",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:18:07.590Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mixjb5zq_aijxq0": {
+      "sessionId": "sess_mixjb5zq_aijxq0",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:18:29.654Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixjb5zq_aijxq0_q1_1765221510180.webm",
+          "size": 1141201,
+          "uploadedAt": "2025-12-08T19:18:30.202Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixjk2dr_lgrurt": {
+      "sessionId": "sess_mixjk2dr_lgrurt",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:25:24.879Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixjk2dr_lgrurt_q1_1765221925692.webm",
+          "size": 1766085,
+          "uploadedAt": "2025-12-08T19:25:25.707Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_mixjz8mu_4dfzk6": {
+      "sessionId": "sess_mixjz8mu_4dfzk6",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:37:12.823Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_mixksj34_agdxfi": {
+      "sessionId": "sess_mixksj34_agdxfi",
+      "candidate": null,
+      "startedAt": "2025-12-08T19:59:59.392Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mixksj34_agdxfi_q1_1765223999914.webm",
+          "size": 1932936,
+          "uploadedAt": "2025-12-08T19:59:59.958Z"
+        }
+      ],
+      "metadata": {}
+    }
+  },
+  "uploads": [
+    {
+      "filename": "sess_mix9v3x1_jnvbxb_q1_1765208777219.webm",
+      "sessionId": "sess_mix9v3x1_jnvbxb",
+      "question": 1,
+      "size": 880268,
+      "uploadedAt": "2025-12-08T15:46:17.225Z"
+    },
+    {
+      "filename": "sess_mix9v3x1_jnvbxb_q1_1765209993291.webm",
+      "sessionId": "sess_mix9v3x1_jnvbxb",
+      "question": 1,
+      "size": 880268,
+      "uploadedAt": "2025-12-08T16:06:33.299Z"
+    },
+    {
+      "filename": "sess_mix9v3x1_jnvbxb_q1_1765213213706.webm",
+      "sessionId": "sess_mix9v3x1_jnvbxb",
+      "question": 1,
+      "size": 4,
+      "uploadedAt": "2025-12-08T17:00:13.708Z"
+    },
+    {
+      "filename": "sess_mix9v3x1_jnvbxb_q1_1765213452873.webm",
+      "sessionId": "sess_mix9v3x1_jnvbxb",
+      "question": 1,
+      "size": 4,
+      "uploadedAt": "2025-12-08T17:04:12.874Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765215330524.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 880268,
+      "uploadedAt": "2025-12-08T17:35:30.527Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765215990334.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 1562545,
+      "uploadedAt": "2025-12-08T17:46:30.337Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q2_1765216045082.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 2,
+      "size": 770360,
+      "uploadedAt": "2025-12-08T17:47:25.095Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q3_1765216054151.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 3,
+      "size": 605842,
+      "uploadedAt": "2025-12-08T17:47:34.152Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765216057453.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 382260,
+      "uploadedAt": "2025-12-08T17:47:37.459Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765216794221.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 414410,
+      "uploadedAt": "2025-12-08T17:59:54.223Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q2_1765216802909.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 2,
+      "size": 567426,
+      "uploadedAt": "2025-12-08T18:00:02.912Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q3_1765216806855.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 3,
+      "size": 331408,
+      "uploadedAt": "2025-12-08T18:00:06.861Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765216809795.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 300686,
+      "uploadedAt": "2025-12-08T18:00:09.837Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765217393222.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 319106,
+      "uploadedAt": "2025-12-08T18:09:53.227Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q2_1765217399505.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 2,
+      "size": 360460,
+      "uploadedAt": "2025-12-08T18:09:59.506Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q3_1765217404878.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 3,
+      "size": 357714,
+      "uploadedAt": "2025-12-08T18:10:04.895Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765217408949.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 246092,
+      "uploadedAt": "2025-12-08T18:10:08.952Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765217978251.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 182449,
+      "uploadedAt": "2025-12-08T18:19:38.256Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q2_1765217984499.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 2,
+      "size": 236404,
+      "uploadedAt": "2025-12-08T18:19:44.504Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q3_1765217987457.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 3,
+      "size": 243554,
+      "uploadedAt": "2025-12-08T18:19:47.478Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765217990343.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 157546,
+      "uploadedAt": "2025-12-08T18:19:50.601Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765217999026.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 138992,
+      "uploadedAt": "2025-12-08T18:19:59.028Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765218189018.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 287352,
+      "uploadedAt": "2025-12-08T18:23:09.023Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765218664563.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 209313,
+      "uploadedAt": "2025-12-08T18:31:04.565Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q2_1765218669370.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 2,
+      "size": 274582,
+      "uploadedAt": "2025-12-08T18:31:09.372Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q3_1765218673386.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 3,
+      "size": 179841,
+      "uploadedAt": "2025-12-08T18:31:13.388Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765218676485.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 154219,
+      "uploadedAt": "2025-12-08T18:31:16.501Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765219505212.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 269722,
+      "uploadedAt": "2025-12-08T18:45:05.221Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765219523915.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 384248,
+      "uploadedAt": "2025-12-08T18:45:23.953Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765219763566.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 221525,
+      "uploadedAt": "2025-12-08T18:49:23.573Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765219885368.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 341809,
+      "uploadedAt": "2025-12-08T18:51:25.373Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765220040023.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 763694,
+      "uploadedAt": "2025-12-08T18:54:00.051Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765220201830.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 230971,
+      "uploadedAt": "2025-12-08T18:56:41.842Z"
+    },
+    {
+      "filename": "sess_mixivu6d_ikf3oh_q1_1765220794641.webm",
+      "sessionId": "sess_mixivu6d_ikf3oh",
+      "question": 1,
+      "size": 1083298,
+      "uploadedAt": "2025-12-08T19:06:34.773Z"
+    },
+    {
+      "filename": "sess_mixixnxa_pqexu9_q1_1765220880089.webm",
+      "sessionId": "sess_mixixnxa_pqexu9",
+      "question": 1,
+      "size": 1315167,
+      "uploadedAt": "2025-12-08T19:08:00.102Z"
+    },
+    {
+      "filename": "sess_mixiy25a_8kpiqj_q1_1765220898536.webm",
+      "sessionId": "sess_mixiy25a_8kpiqj",
+      "question": 1,
+      "size": 1010874,
+      "uploadedAt": "2025-12-08T19:08:18.543Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765221185474.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 1325759,
+      "uploadedAt": "2025-12-08T19:13:05.489Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765221375260.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 880268,
+      "uploadedAt": "2025-12-08T19:16:15.277Z"
+    },
+    {
+      "filename": "sess_mixjb5zq_aijxq0_q1_1765221510180.webm",
+      "sessionId": "sess_mixjb5zq_aijxq0",
+      "question": 1,
+      "size": 1141201,
+      "uploadedAt": "2025-12-08T19:18:30.202Z"
+    },
+    {
+      "filename": "sess_mixjk2dr_lgrurt_q1_1765221925692.webm",
+      "sessionId": "sess_mixjk2dr_lgrurt",
+      "question": 1,
+      "size": 1766085,
+      "uploadedAt": "2025-12-08T19:25:25.707Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765221948832.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 1706807,
+      "uploadedAt": "2025-12-08T19:25:48.856Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765221986481.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 1597940,
+      "uploadedAt": "2025-12-08T19:26:26.494Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765222007286.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 901322,
+      "uploadedAt": "2025-12-08T19:26:47.304Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765222614644.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 1037918,
+      "uploadedAt": "2025-12-08T19:36:54.664Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765222678074.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 1067884,
+      "uploadedAt": "2025-12-08T19:37:58.101Z"
+    },
+    {
+      "filename": "sess_mixksj34_agdxfi_q1_1765223999914.webm",
+      "sessionId": "sess_mixksj34_agdxfi",
+      "question": 1,
+      "size": 1932936,
+      "uploadedAt": "2025-12-08T19:59:59.958Z"
+    }
+  ]
+}
