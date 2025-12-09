@@ -33,7 +33,9 @@ export function initStateFromStorage(sessionId) {
   try {
     const raw = localStorage.getItem(storageKey(sessionId));
     if (!raw) {
-      _internal = { ...DEFAULT_STATE, answered: [] };
+      // Nếu không có dữ liệu trong localStorage cho session này,
+      // không reset _internal — giữ state hiện có.
+      // Trả về empty uploadedMap để caller biết không có uploadedMap lưu sẵn.
       return { uploadedMap: {} };
     }
     const parsed = JSON.parse(raw);
@@ -50,10 +52,11 @@ export function initStateFromStorage(sessionId) {
     return { uploadedMap };
   } catch (e) {
     console.warn("initStateFromStorage error", e);
-    _internal = { ...DEFAULT_STATE, answered: [] };
+    
     return { uploadedMap: {} };
   }
 }
+
 
 /**
  * saveStateToStorage(sessionId, extra = { uploadedMap })

@@ -35,6 +35,9 @@ const validateUpload = (req, res, next) => {
     if (!session) {
       return res.status(400).json({ ok: false, message: 'SESSION_NOT_FOUND' });
     }
+    if (session.endedAt) {
+      return res.status(410).json({ ok: false, message: 'SESSION_ALREADY_FINISHED' });
+    }
 
     // 5) Check question đúng (1..5)
     if (!Number.isInteger(question) || question < 1 || question > 5) {

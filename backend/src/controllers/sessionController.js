@@ -1,3 +1,4 @@
+// backend/src/controllers/sessionController.js
 const {
   createSession,
   getSession,
@@ -15,7 +16,7 @@ function startSession(req, res) {
 
     return res.status(200).json({
       ok: true,
-      sessionId: session.sessionId,   
+      sessionId: session.sessionId,
       startedAt: session.startedAt
     });
   } catch (err) {
@@ -46,14 +47,25 @@ function getSessionStatus(req, res) {
     });
   }
 
-  
+  // prepare answeredNumbers as unique ints (avoid duplicates)
+  const answeredNumbers = Array.isArray(session.answers)
+    ? Array.from(
+        new Set(
+          session.answers
+            .map((a) => Number(a.question))
+            .filter((n) => Number.isInteger(n) && n >= 1)
+        )
+      )
+    : [];
+
   const publicSession = {
     sessionId: session.sessionId,
     candidate: session.candidate || null,
     startedAt: session.startedAt,
     endedAt: session.endedAt,
-    answers: session.answers,
-    metadata: session.metadata
+    finished: !!session.endedAt,
+    answered: answeredNumbers,
+    metadata: session.metadata || {}
   };
 
   return res.status(200).json({
@@ -90,7 +102,7 @@ function endSessionController(req, res) {
 
   return res.status(200).json({
     ok: true,
-    sessionId: session.sessionId,   
+    sessionId: session.sessionId,
     startedAt: session.startedAt,
     endedAt: session.endedAt
   });
@@ -101,5 +113,3 @@ module.exports = {
   getSessionStatus,
   endSessionController
 };
-
-

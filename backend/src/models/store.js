@@ -76,18 +76,37 @@ function appendUpload(upload) {
   const data = readStore();
   data.uploads.push(upload);
 
-  
   if (data.sessions[upload.sessionId]) {
-    data.sessions[upload.sessionId].answers.push({
+    // ensure answers array exists
+    if (!Array.isArray(data.sessions[upload.sessionId].answers)) {
+      data.sessions[upload.sessionId].answers = [];
+    }
+
+    // if already answered that question, replace the record or ignore
+    const existingIndex = data.sessions[upload.sessionId].answers.findIndex(a => {
+      if (a && typeof a === 'object' && 'question' in a) return Number(a.question) === Number(upload.question);
+      if (typeof a === 'number') return Number(a) === Number(upload.question);
+      return false;
+    });
+
+    const record = {
       question: upload.question,
       filename: upload.filename,
       size: upload.size,
       uploadedAt: upload.uploadedAt
-    });
+    };
+
+    if (existingIndex >= 0) {
+      // replace previous record for that question
+      data.sessions[upload.sessionId].answers[existingIndex] = record;
+    } else {
+      data.sessions[upload.sessionId].answers.push(record);
+    }
   }
 
   writeStore(data);
 }
+
 
 module.exports = {
   createSession,

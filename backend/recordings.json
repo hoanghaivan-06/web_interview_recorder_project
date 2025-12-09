@@ -4,8 +4,33 @@
       "sessionId": "sess_mit3qw50_2v99hp",
       "candidate": "Test",
       "startedAt": "2025-12-05T16:51:44.820Z",
-      "endedAt": null,
-      "answers": [],
+      "endedAt": "2025-12-09T08:08:54.711Z",
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_mit3qw50_2v99hp_q1_1765262038486.webm",
+          "size": 440935,
+          "uploadedAt": "2025-12-09T06:33:58.498Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_mit3qw50_2v99hp_q2_1765267699633.webm",
+          "size": 282887,
+          "uploadedAt": "2025-12-09T08:08:19.644Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_mit3qw50_2v99hp_q3_1765267717772.webm",
+          "size": 373415,
+          "uploadedAt": "2025-12-09T08:08:37.784Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mit3qw50_2v99hp_q4_1765267726172.webm",
+          "size": 320214,
+          "uploadedAt": "2025-12-09T08:08:46.287Z"
+        }
+      ],
       "metadata": {}
     },
     "sess_mix9v3x1_jnvbxb": {
@@ -53,13 +78,13 @@
       "sessionId": "sess_mixfk5sr_hg4dgh",
       "candidate": "Test candidate",
       "startedAt": "2025-12-08T17:33:30.843Z",
-      "endedAt": null,
+      "endedAt": "2025-12-09T08:01:10.133Z",
       "answers": [
         {
           "question": 1,
-          "filename": "sess_mixfk5sr_hg4dgh_q1_1765215330524.webm",
-          "size": 880268,
-          "uploadedAt": "2025-12-08T17:35:30.527Z"
+          "filename": "sess_mixfk5sr_hg4dgh_q1_1765263563082.webm",
+          "size": 496389,
+          "uploadedAt": "2025-12-09T06:59:23.092Z"
         },
         {
           "question": 1,
@@ -81,9 +106,9 @@
         },
         {
           "question": 4,
-          "filename": "sess_mixfk5sr_hg4dgh_q4_1765216057453.webm",
-          "size": 382260,
-          "uploadedAt": "2025-12-08T17:47:37.459Z"
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765261398837.webm",
+          "size": 627603,
+          "uploadedAt": "2025-12-09T06:23:18.874Z"
         },
         {
           "question": 1,
@@ -228,6 +253,18 @@
           "filename": "sess_mixfk5sr_hg4dgh_q1_1765220201830.webm",
           "size": 230971,
           "uploadedAt": "2025-12-08T18:56:41.842Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765257556880.webm",
+          "size": 328200,
+          "uploadedAt": "2025-12-09T05:19:16.882Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixfk5sr_hg4dgh_q4_1765258709941.webm",
+          "size": 494293,
+          "uploadedAt": "2025-12-09T05:38:29.945Z"
         }
       ],
       "metadata": {}
@@ -305,7 +342,7 @@
       "sessionId": "sess_mixj2xuq_onk2av",
       "candidate": null,
       "startedAt": "2025-12-08T19:12:05.858Z",
-      "endedAt": null,
+      "endedAt": "2025-12-09T05:18:49.836Z",
       "answers": [
         {
           "question": 1,
@@ -348,6 +385,96 @@
           "filename": "sess_mixj2xuq_onk2av_q1_1765222678074.webm",
           "size": 1067884,
           "uploadedAt": "2025-12-08T19:37:58.101Z"
+        },
+        {
+          "question": 1,
+          "filename": "sess_mixj2xuq_onk2av_q1_1765255767130.webm",
+          "size": 998210,
+          "uploadedAt": "2025-12-09T04:49:27.133Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_mixj2xuq_onk2av_q2_1765255799401.webm",
+          "size": 712198,
+          "uploadedAt": "2025-12-09T04:49:59.401Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_mixj2xuq_onk2av_q3_1765255851844.webm",
+          "size": 3298752,
+          "uploadedAt": "2025-12-09T04:50:51.846Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765255871603.webm",
+          "size": 2023832,
+          "uploadedAt": "2025-12-09T04:51:11.604Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765255883943.webm",
+          "size": 395277,
+          "uploadedAt": "2025-12-09T04:51:23.957Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765255923907.webm",
+          "size": 476028,
+          "uploadedAt": "2025-12-09T04:52:03.910Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765255953719.webm",
+          "size": 242807,
+          "uploadedAt": "2025-12-09T04:52:33.720Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765256074066.webm",
+          "size": 572439,
+          "uploadedAt": "2025-12-09T04:54:34.080Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765256174204.webm",
+          "size": 510981,
+          "uploadedAt": "2025-12-09T04:56:14.208Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765256211674.webm",
+          "size": 584649,
+          "uploadedAt": "2025-12-09T04:56:51.677Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765256251649.webm",
+          "size": 540208,
+          "uploadedAt": "2025-12-09T04:57:31.651Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765256868690.webm",
+          "size": 670528,
+          "uploadedAt": "2025-12-09T05:07:48.692Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765256888245.webm",
+          "size": 588856,
+          "uploadedAt": "2025-12-09T05:08:08.247Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765257294419.webm",
+          "size": 612891,
+          "uploadedAt": "2025-12-09T05:14:54.420Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_mixj2xuq_onk2av_q4_1765257543024.webm",
+          "size": 530026,
+          "uploadedAt": "2025-12-09T05:19:03.026Z"
         }
       ],
       "metadata": {}
@@ -417,6 +544,62 @@
           "filename": "sess_mixksj34_agdxfi_q1_1765223999914.webm",
           "size": 1932936,
           "uploadedAt": "2025-12-08T19:59:59.958Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_miy3pmqb_pdxpt7": {
+      "sessionId": "sess_miy3pmqb_pdxpt7",
+      "candidate": null,
+      "startedAt": "2025-12-09T04:49:36.851Z",
+      "endedAt": null,
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_miy3pmqb_pdxpt7_q1_1765255777166.webm",
+          "size": 489121,
+          "uploadedAt": "2025-12-09T04:49:37.177Z"
+        }
+      ],
+      "metadata": {}
+    },
+    "sess_miy71oai_23do13": {
+      "sessionId": "sess_miy71oai_23do13",
+      "candidate": null,
+      "startedAt": "2025-12-09T06:22:57.594Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {}
+    },
+    "sess_miyb5nwn_78a0dr": {
+      "sessionId": "sess_miyb5nwn_78a0dr",
+      "candidate": null,
+      "startedAt": "2025-12-09T08:18:02.183Z",
+      "endedAt": "2025-12-09T08:19:16.762Z",
+      "answers": [
+        {
+          "question": 1,
+          "filename": "sess_miyb5nwn_78a0dr_q1_1765268282254.webm",
+          "size": 982125,
+          "uploadedAt": "2025-12-09T08:18:02.276Z"
+        },
+        {
+          "question": 2,
+          "filename": "sess_miyb5nwn_78a0dr_q2_1765268291075.webm",
+          "size": 319462,
+          "uploadedAt": "2025-12-09T08:18:11.078Z"
+        },
+        {
+          "question": 3,
+          "filename": "sess_miyb5nwn_78a0dr_q3_1765268299146.webm",
+          "size": 418451,
+          "uploadedAt": "2025-12-09T08:18:19.161Z"
+        },
+        {
+          "question": 4,
+          "filename": "sess_miyb5nwn_78a0dr_q4_1765268310502.webm",
+          "size": 240763,
+          "uploadedAt": "2025-12-09T08:18:30.518Z"
         }
       ],
       "metadata": {}
@@ -744,6 +927,244 @@
       "question": 1,
       "size": 1932936,
       "uploadedAt": "2025-12-08T19:59:59.958Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q1_1765255767130.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 1,
+      "size": 998210,
+      "uploadedAt": "2025-12-09T04:49:27.133Z"
+    },
+    {
+      "filename": "sess_miy3pmqb_pdxpt7_q1_1765255777166.webm",
+      "sessionId": "sess_miy3pmqb_pdxpt7",
+      "question": 1,
+      "size": 489121,
+      "uploadedAt": "2025-12-09T04:49:37.177Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q2_1765255799401.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 2,
+      "size": 712198,
+      "uploadedAt": "2025-12-09T04:49:59.401Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q3_1765255851844.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 3,
+      "size": 3298752,
+      "uploadedAt": "2025-12-09T04:50:51.846Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765255871603.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 2023832,
+      "uploadedAt": "2025-12-09T04:51:11.604Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765255883943.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 395277,
+      "uploadedAt": "2025-12-09T04:51:23.957Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765255923907.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 476028,
+      "uploadedAt": "2025-12-09T04:52:03.910Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765255953719.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 242807,
+      "uploadedAt": "2025-12-09T04:52:33.720Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765256074066.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 572439,
+      "uploadedAt": "2025-12-09T04:54:34.080Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765256174204.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 510981,
+      "uploadedAt": "2025-12-09T04:56:14.208Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765256211674.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 584649,
+      "uploadedAt": "2025-12-09T04:56:51.677Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765256251649.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 540208,
+      "uploadedAt": "2025-12-09T04:57:31.651Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765256868690.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 670528,
+      "uploadedAt": "2025-12-09T05:07:48.692Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765256888245.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 588856,
+      "uploadedAt": "2025-12-09T05:08:08.247Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765257294419.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 612891,
+      "uploadedAt": "2025-12-09T05:14:54.420Z"
+    },
+    {
+      "filename": "sess_mixj2xuq_onk2av_q4_1765257543024.webm",
+      "sessionId": "sess_mixj2xuq_onk2av",
+      "question": 4,
+      "size": 530026,
+      "uploadedAt": "2025-12-09T05:19:03.026Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765257556880.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 328200,
+      "uploadedAt": "2025-12-09T05:19:16.882Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765258709941.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 494293,
+      "uploadedAt": "2025-12-09T05:38:29.945Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q4_1765261398837.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 4,
+      "size": 627603,
+      "uploadedAt": "2025-12-09T06:23:18.874Z"
+    },
+    {
+      "filename": "sess_mit3qw50_2v99hp_q1_1765261965586.webm",
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "question": 1,
+      "size": 401496,
+      "uploadedAt": "2025-12-09T06:32:45.589Z"
+    },
+    {
+      "filename": "sess_mit3qw50_2v99hp_q1_1765261989781.webm",
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "question": 1,
+      "size": 1553798,
+      "uploadedAt": "2025-12-09T06:33:09.797Z"
+    },
+    {
+      "filename": "sess_mit3qw50_2v99hp_q1_1765262013556.webm",
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "question": 1,
+      "size": 1470414,
+      "uploadedAt": "2025-12-09T06:33:33.558Z"
+    },
+    {
+      "filename": "sess_mit3qw50_2v99hp_q1_1765262038486.webm",
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "question": 1,
+      "size": 440935,
+      "uploadedAt": "2025-12-09T06:33:58.498Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765263513753.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 753260,
+      "uploadedAt": "2025-12-09T06:58:33.757Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765263551358.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 455035,
+      "uploadedAt": "2025-12-09T06:59:11.363Z"
+    },
+    {
+      "filename": "sess_mixfk5sr_hg4dgh_q1_1765263563082.webm",
+      "sessionId": "sess_mixfk5sr_hg4dgh",
+      "question": 1,
+      "size": 496389,
+      "uploadedAt": "2025-12-09T06:59:23.092Z"
+    },
+    {
+      "filename": "sess_mit3qw50_2v99hp_q2_1765267699633.webm",
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "question": 2,
+      "size": 282887,
+      "uploadedAt": "2025-12-09T08:08:19.644Z"
+    },
+    {
+      "filename": "sess_mit3qw50_2v99hp_q3_1765267717772.webm",
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "question": 3,
+      "size": 373415,
+      "uploadedAt": "2025-12-09T08:08:37.784Z"
+    },
+    {
+      "filename": "sess_mit3qw50_2v99hp_q4_1765267726172.webm",
+      "sessionId": "sess_mit3qw50_2v99hp",
+      "question": 4,
+      "size": 320214,
+      "uploadedAt": "2025-12-09T08:08:46.287Z"
+    },
+    {
+      "filename": "sess_miyb5nwn_78a0dr_q1_1765268282254.webm",
+      "sessionId": "sess_miyb5nwn_78a0dr",
+      "question": 1,
+      "size": 982125,
+      "uploadedAt": "2025-12-09T08:18:02.276Z"
+    },
+    {
+      "filename": "sess_miyb5nwn_78a0dr_q2_1765268291075.webm",
+      "sessionId": "sess_miyb5nwn_78a0dr",
+      "question": 2,
+      "size": 319462,
+      "uploadedAt": "2025-12-09T08:18:11.078Z"
+    },
+    {
+      "filename": "sess_miyb5nwn_78a0dr_q3_1765268299146.webm",
+      "sessionId": "sess_miyb5nwn_78a0dr",
+      "question": 3,
+      "size": 418451,
+      "uploadedAt": "2025-12-09T08:18:19.161Z"
+    },
+    {
+      "filename": "sess_miyb5nwn_78a0dr_q4_1765268303937.webm",
+      "sessionId": "sess_miyb5nwn_78a0dr",
+      "question": 4,
+      "size": 282102,
+      "uploadedAt": "2025-12-09T08:18:23.941Z"
+    },
+    {
+      "filename": "sess_miyb5nwn_78a0dr_q4_1765268310502.webm",
+      "sessionId": "sess_miyb5nwn_78a0dr",
+      "question": 4,
+      "size": 240763,
+      "uploadedAt": "2025-12-09T08:18:30.518Z"
     }
   ]
 }
