@@ -16,28 +16,52 @@
     <section class="layout">
 
       <!-- LEFT: RECORD -->
-      <section class="card">
+      <section class="card card-left">
         <h2>🎥 Điều khiển ghi hình</h2>
 
+        <!-- Token -->
+        <div class="field">
+          <label for="tokenInput" class="label">Token đăng nhập (1124xxxx)</label>
+          <input id="tokenInput" class="input" placeholder="Ví dụ: 11241234">
+          <p class="note">* Bắt buộc để bắt đầu phiên phỏng vấn</p>
+        </div>
+
+        <!-- Candidate -->
+        <div class="field">
+          <label for="candidateInput" class="label">Tên ứng viên (tuỳ chọn)</label>
+          <input id="candidateInput" class="input" placeholder="Nhập tên (không bắt buộc)">
+        </div>
+
+        <!-- Session ID -->
+        <div class="field">
+          <label for="sessionIdInput" class="label">Session ID</label>
+          <input id="sessionIdInput" class="input" placeholder="Tự tạo sau khi nhập token" disabled>
+        </div>
+
+        <!-- Controls -->
         <div class="controls">
-          <button id="btnInit">📸 Xin quyền camera</button>
-          <button id="btnStart" disabled>🎬 Bắt đầu ghi</button>
-          <button id="btnStop" disabled>⏹️ Dừng</button>
-          <button id="btnUpload" disabled>☁️ Upload</button>
+          <button id="btnInit" type="button">📸 Xin quyền camera</button>
+          <button id="btnStart" type="button" disabled>🎬 Bắt đầu</button>
+          <button id="btnStop" type="button" disabled>⏹️ Dừng</button>
+          <button id="btnUpload" type="button" disabled>☁️ Upload</button>
+          <button id="btnEndSession" type="button" class="end-btn" disabled>🔒 Kết thúc</button>
         </div>
 
-        <div id="cameraBanner" class="hidden">
-          <span>🚫 Không vào được camera</span>
+        <div id="sessionEndedAt" class="ended-text"></div>
+
+        <div id="cameraBanner" class="banner hidden">
+          🚫 Không truy cập được camera
         </div>
 
+        <!-- Videos -->
         <div class="video-grid">
           <div>
-            <p class="muted">Preview</p>
+            <p class="label">Preview</p>
             <video id="preview" class="mirrored" autoplay muted playsinline></video>
           </div>
 
           <div>
-            <p class="muted">Playback</p>
+            <p class="label">Playback</p>
             <video id="playback" class="mirrored" controls></video>
             <div id="downloadLink" class="muted">Chưa có video.</div>
           </div>
@@ -47,17 +71,17 @@
       </section>
 
       <!-- RIGHT: STATE -->
-      <section class="card">
+      <section class="card card-right">
         <h2>🧠 Trạng thái bài nói</h2>
 
-        <p class="muted">
+        <p class="label">
           Câu hiện tại:
-          <strong id="currentQuestionLabel">1</strong>/<span id="totalQuestionLabel">4</span>
+          <strong id="currentQuestionLabel">1</strong>/<span id="totalQuestionLabel">5</span>
         </p>
 
         <div id="questionDots" class="dot-list"></div>
 
-        <p class="muted"><strong>Câu đã trả lời:</strong></p>
+        <p class="label"><strong>Câu đã trả lời:</strong></p>
         <div id="answeredList"></div>
       </section>
 

@@ -1,0 +1,12 @@
+{
+  "liveServer.settings.fullReload": false,
+  "liveServer.settings.ignoreFiles": [
+    "**/*.js",
+    "**/*.css",
+    "**/*.ts",
+    "**/*.map",
+    "**/backend/**"
+  ],
+  "liveServer.settings.wait": 0,
+  "liveServer.settings.root": "frontend"
+}
