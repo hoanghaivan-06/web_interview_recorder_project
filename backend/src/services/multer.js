@@ -4,14 +4,26 @@ const path = require('path');
 const fs = require('fs');
 
 const TMP_DIR = path.join(__dirname, '..', '..', 'tmp_uploads');
-if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR, { recursive: true });
 
+// ensure tmp dir exists
+if (!fs.existsSync(TMP_DIR)) {
+  fs.mkdirSync(TMP_DIR, { recursive: true });
+}
+
+// max file size (bytes)
 const maxSize = Number(process.env.MAX_FILE_SIZE || 200000000);
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, TMP_DIR),
+  destination: (req, file, cb) => {
+    cb(null, TMP_DIR);
+  },
   filename: (req, file, cb) => {
-    const safe = file.originalname.replace(/\s+/g, '_');
+    // sanitize original name
+    const safe = (file.originalname || '')
+      .replace(/[^\w.\-]+/g, '_')  
+      .slice(0, 80);
+
+    // timestamp prefix to avoid collisions
     cb(null, `${Date.now()}_${safe}`);
   }
 });

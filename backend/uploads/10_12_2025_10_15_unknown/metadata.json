@@ -1,0 +1,45 @@
+{
+  "sessionId": "sess_mizfsta9_2k8l3c",
+  "userName": null,
+  "timeZone": "Asia/Bangkok",
+  "folderName": "10_12_2025_10_15_unknown",
+  "startedAt": "2025-12-10T03:15:46.882Z",
+  "endedAt": "2025-12-10T04:03:04.758Z",
+  "uploadedAt": "2025-12-10T04:03:04.769Z",
+  "receivedQuestions": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "videoFiles": [
+    {
+      "fileName": "Q1.webm",
+      "uploadedAt": "2025-12-10T03:16:01.475Z",
+      "sizeBytes": 649928
+    },
+    {
+      "fileName": "Q2.webm",
+      "uploadedAt": "2025-12-10T03:16:11.110Z",
+      "sizeBytes": 310235
+    },
+    {
+      "fileName": "Q3.webm",
+      "uploadedAt": "2025-12-10T03:16:27.761Z",
+      "sizeBytes": 281314
+    },
+    {
+      "fileName": "Q4.webm",
+      "uploadedAt": "2025-12-10T03:16:38.672Z",
+      "sizeBytes": 352069
+    },
+    {
+      "fileName": "Q5.webm",
+      "uploadedAt": "2025-12-10T03:16:50.015Z",
+      "sizeBytes": 154655
+    }
+  ],
+  "completed": true,
+  "browserInfo": null
+}

@@ -6,6 +6,11 @@
   --success: #4ade80;
   --danger: #f87171;
   --br: 22px;
+
+  --card-bg: rgba(30,41,59,.85);
+  --card-border: rgba(148,163,184,.25);
+  --input-bg: rgba(30,41,59,.3);
+  --input-border: rgba(148,163,184,.25);
 }
 
 body {
@@ -21,6 +26,7 @@ body {
   justify-content: center;
 }
 
+/* APP WRAPPER */
 .app {
   width: 100%;
   max-width: 1080px;
@@ -28,10 +34,11 @@ body {
   backdrop-filter: blur(18px);
   border-radius: 28px;
   padding: 20px 24px 28px;
-  border: 1px solid rgba(148,163,184,.25);
+  border: 1px solid var(--card-border);
   box-shadow: 0 20px 50px rgba(0,0,0,.4);
 }
 
+/* HEADERS */
 h1 {
   font-size: 1.6rem;
   margin-bottom: 6px;
@@ -40,11 +47,24 @@ h1 {
   gap: 10px;
 }
 
-p { 
-  color: var(--muted); 
+h2 {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* ========= Layout ========= */
+/* CARDS */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 18px;
+  border-radius: var(--br);
+  box-shadow: 0 14px 30px rgba(0,0,0,.32);
+}
+
+/* LAYOUT */
 .layout {
   display: grid;
   gap: 20px;
@@ -55,20 +75,42 @@ p {
   .layout { grid-template-columns: 1fr; }
 }
 
-.card {
-  background: rgba(30,41,59,.85);
-  border: 1px solid rgba(148,163,184,.25);
-  padding: 18px;
-  border-radius: var(--br);
-  box-shadow: 0 14px 30px rgba(0,0,0,.32);
+/* LABEL + INPUT */
+.label { 
+  color: var(--muted); 
+  font-size: .9rem;
 }
 
-h2 {
-  margin: 0 0 10px 0;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.field {
+  margin: 10px 0;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: .9rem;
+  transition: .2s;
+}
+
+.input:focus {
+  background: rgba(129,140,248,.15);
+  border-color: var(--accent);
+  outline: none;
+}
+
+.input.error {
+  border-color: var(--danger);
+  background: rgba(248,113,113,.15);
+}
+
+.note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 4px;
 }
 
 /* BUTTONS */
@@ -92,18 +134,22 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.end-btn {
+  background: #ef4444;
+  border-color: rgba(239,68,68,.6);
+}
+.end-btn:hover:not(:disabled) {
+  background: #f87171;
+}
+
 .controls { 
   display: flex; 
   gap: 10px; 
   flex-wrap: wrap; 
-  margin: 10px 0; 
+  margin: 14px 0; 
 }
 
-.muted { 
-  color: var(--muted); 
-}
-
-/* VIDEO */
+/* VIDEOS */
 video {
   width: 100%;
   background: #000;
@@ -112,7 +158,6 @@ video {
   box-shadow: 0 12px 28px rgba(0,0,0,.45);
 }
 
-/* ⭐ Lật gương */
 .mirrored {
   transform: scaleX(-1);
 }
@@ -127,7 +172,7 @@ video {
   .video-grid { grid-template-columns: 1fr; }
 }
 
-/* STATE UI */
+/* DOTS */
 .dot-list {
   display: flex;
   gap: 10px;
@@ -136,8 +181,8 @@ video {
 }
 
 .dot {
-  width: 28px; 
-  height: 28px;
+  width: 30px; 
+  height: 30px;
   border-radius: 999px;
   background: rgba(148,163,184,.15);
   border: 1px solid rgba(148,163,184,.45);
@@ -159,17 +204,18 @@ video {
 .dot.answered::after {
   content: "";
   position: absolute;
-  width: 8px; 
-  height: 8px;
+  width: 9px; 
+  height: 9px;
   background: var(--success);
   border-radius: 999px;
   bottom: 2px; 
   right: 2px;
 }
 
+/* Chips */
 .chip {
   display: inline-flex;
-  padding: 3px 7px;
+  padding: 4px 8px;
   background: rgba(148,163,184,.15);
   border-radius: 999px;
   margin: 2px;
@@ -185,46 +231,31 @@ video {
 
 /* LOG */
 .log {
-  margin-top: 14px;
-  max-height: 150px;
+  margin-top: 16px;
+  max-height: 160px;
   overflow-y: auto;
-  font-size: .79rem;
+  font-size: .8rem;
   background: rgba(0,0,0,.35);
-  padding: 8px 10px;
+  padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid rgba(59,130,246,.4);
 }
 
-/* BANNER LỖI */
-#cameraBanner {
-  display: none;
+/* ERROR BANNER */
+.banner {
   margin-top: 10px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   background: rgba(127,29,29,.8);
   border: 1px solid rgba(248,113,113,.7);
-  border-radius: 999px;
+  border-radius: 10px;
   color: #fee2e2;
-  font-size: .82rem;
+  font-size: .83rem;
 }
+.hidden { display: none; }
 
-#cameraBanner.show { 
-  display: flex; 
-  align-items: center; 
-  gap: 8px; 
-}
-
-/* End session button style */
-#btnEndSession {
-  background: #ef4444;
-  border-color: rgba(239,68,68,.6);
-  color: white;
-}
-#btnEndSession:hover:not(:disabled) {
-  background: #f87171;
-}
-
-/* Ended at text */
-#sessionEndedAt {
+/* Ended At */
+.ended-text {
   font-size: 0.9rem;
   color: var(--muted);
+  margin-top: 8px;
 }

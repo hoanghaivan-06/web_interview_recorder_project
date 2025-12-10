@@ -5,7 +5,8 @@ export const QUESTIONS = [
   { id: 1, text: "Câu 1" },
   { id: 2, text: "Câu 2" },
   { id: 3, text: "Câu 3" },
-  { id: 4, text: "Câu 4" }
+  { id: 4, text: "Câu 4" },
+  { id: 5, text: "Câu 5" } // <-- Thêm câu 5 để totalQuestions = 5
 ];
 
 const DEFAULT_STATE = {
@@ -27,7 +28,8 @@ function storageKey(sessionId) {
 /**
  * initStateFromStorage(sessionId)
  * - Thử load state (currentQuestion, answered, uploadedMap) từ localStorage.
- * - Trả về object { uploadedMap } (uploadedMap có thể undefined nếu không có).
+ * - Trả về object { uploadedMap, currentQuestion, answered }.
+ * - Nếu không có dữ liệu cho session này, KHÔNG reset _internal (giữ state hiện tại).
  */
 export function initStateFromStorage(sessionId) {
   try {
@@ -36,9 +38,14 @@ export function initStateFromStorage(sessionId) {
       // Nếu không có dữ liệu trong localStorage cho session này,
       // không reset _internal — giữ state hiện có.
       // Trả về empty uploadedMap để caller biết không có uploadedMap lưu sẵn.
-      return { uploadedMap: {} };
+      return {
+        uploadedMap: {},
+        currentQuestion: _internal.currentQuestion,
+        answered: Array.from(_internal.answered)
+      };
     }
     const parsed = JSON.parse(raw);
+
     _internal = {
       currentQuestion:
         typeof parsed.currentQuestion === "number"
@@ -49,11 +56,19 @@ export function initStateFromStorage(sessionId) {
     const uploadedMap = parsed.uploadedMap && typeof parsed.uploadedMap === "object"
       ? parsed.uploadedMap
       : {};
-    return { uploadedMap };
+    return {
+      uploadedMap,
+      currentQuestion: _internal.currentQuestion,
+      answered: Array.from(_internal.answered)
+    };
   } catch (e) {
     console.warn("initStateFromStorage error", e);
-    
-    return { uploadedMap: {} };
+
+    return {
+      uploadedMap: {},
+      currentQuestion: _internal.currentQuestion,
+      answered: Array.from(_internal.answered)
+    };
   }
 }
 
@@ -61,13 +76,28 @@ export function initStateFromStorage(sessionId) {
 /**
  * saveStateToStorage(sessionId, extra = { uploadedMap })
  * - Lưu currentQuestion, answered, uploadedMap vào localStorage
+ * - Nếu extra.uploadedMap không được truyền, giữ uploadedMap hiện có trong storage (nếu có).
  */
 export function saveStateToStorage(sessionId, extra = {}) {
   try {
+    // load existing stored payload (if any) to preserve uploadedMap when caller omits it
+    let existingUploadedMap = {};
+    try {
+      const raw = localStorage.getItem(storageKey(sessionId));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.uploadedMap && typeof parsed.uploadedMap === "object") {
+          existingUploadedMap = parsed.uploadedMap;
+        }
+      }
+    } catch (e) {
+      // ignore parse errors and fallback to {}
+    }
+
     const payload = {
       currentQuestion: _internal.currentQuestion,
       answered: Array.isArray(_internal.answered) ? _internal.answered : [],
-      uploadedMap: extra.uploadedMap || {}
+      uploadedMap: (extra && typeof extra.uploadedMap === "object") ? extra.uploadedMap : existingUploadedMap
     };
     localStorage.setItem(storageKey(sessionId), JSON.stringify(payload));
   } catch (e) {
@@ -131,7 +161,7 @@ export function formatToVietnam(isoString) {
   if (!isoString) return "";
   try {
     return new Date(isoString).toLocaleString("vi-VN", {
-      timeZone: "Asia/Ho_Chi_Minh",
+      timeZone: "Asia/Bangkok", // thống nhất với backend
       hour12: false
     });
   } catch (e) {

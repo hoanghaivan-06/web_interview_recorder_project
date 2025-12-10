@@ -603,6 +603,61 @@
         }
       ],
       "metadata": {}
+    },
+    "sess_mizfsnhx_ss5c4m": {
+      "sessionId": "sess_mizfsnhx_ss5c4m",
+      "candidate": null,
+      "startedAt": "2025-12-10T03:15:39.381Z",
+      "endedAt": null,
+      "answers": [],
+      "metadata": {},
+      "folderName": "10_12_2025_10_15_unknown",
+      "folderPath": "E:\\web_interview\\web_interview_recorder_project\\backend\\uploads\\10_12_2025_10_15_unknown",
+      "timeZone": "Asia/Bangkok",
+      "maxQuestions": 5
+    },
+    "sess_mizfsta9_2k8l3c": {
+      "sessionId": "sess_mizfsta9_2k8l3c",
+      "candidate": null,
+      "startedAt": "2025-12-10T03:15:46.882Z",
+      "endedAt": "2025-12-10T04:03:04.758Z",
+      "answers": [
+        {
+          "question": 1,
+          "filename": "Q1.webm",
+          "size": 649928,
+          "uploadedAt": "2025-12-10T03:16:01.475Z"
+        },
+        {
+          "question": 2,
+          "filename": "Q2.webm",
+          "size": 310235,
+          "uploadedAt": "2025-12-10T03:16:11.110Z"
+        },
+        {
+          "question": 3,
+          "filename": "Q3.webm",
+          "size": 281314,
+          "uploadedAt": "2025-12-10T03:16:27.761Z"
+        },
+        {
+          "question": 4,
+          "filename": "Q4.webm",
+          "size": 352069,
+          "uploadedAt": "2025-12-10T03:16:38.672Z"
+        },
+        {
+          "question": 5,
+          "filename": "Q5.webm",
+          "size": 154655,
+          "uploadedAt": "2025-12-10T03:16:50.015Z"
+        }
+      ],
+      "metadata": {},
+      "folderName": "10_12_2025_10_15_unknown",
+      "folderPath": "E:\\web_interview\\web_interview_recorder_project\\backend\\uploads\\10_12_2025_10_15_unknown",
+      "timeZone": "Asia/Bangkok",
+      "maxQuestions": 5
     }
   },
   "uploads": [
@@ -1165,6 +1220,52 @@
       "question": 4,
       "size": 240763,
       "uploadedAt": "2025-12-09T08:18:30.518Z"
+    },
+    {
+      "filename": "Q1.webm",
+      "sessionId": "sess_mizfsta9_2k8l3c",
+      "question": 1,
+      "size": 649928,
+      "uploadedAt": "2025-12-10T03:16:01.475Z",
+      "timeZone": "Asia/Bangkok",
+      "folderName": "10_12_2025_10_15_unknown"
+    },
+    {
+      "filename": "Q2.webm",
+      "sessionId": "sess_mizfsta9_2k8l3c",
+      "question": 2,
+      "size": 310235,
+      "uploadedAt": "2025-12-10T03:16:11.110Z",
+      "timeZone": "Asia/Bangkok",
+      "folderName": "10_12_2025_10_15_unknown"
+    },
+    {
+      "filename": "Q3.webm",
+      "sessionId": "sess_mizfsta9_2k8l3c",
+      "question": 3,
+      "size": 281314,
+      "uploadedAt": "2025-12-10T03:16:27.761Z",
+      "timeZone": "Asia/Bangkok",
+      "folderName": "10_12_2025_10_15_unknown"
+    },
+    {
+      "filename": "Q4.webm",
+      "sessionId": "sess_mizfsta9_2k8l3c",
+      "question": 4,
+      "size": 352069,
+      "uploadedAt": "2025-12-10T03:16:38.672Z",
+      "timeZone": "Asia/Bangkok",
+      "folderName": "10_12_2025_10_15_unknown"
+    },
+    {
+      "filename": "Q5.webm",
+      "sessionId": "sess_mizfsta9_2k8l3c",
+      "question": 5,
+      "size": 154655,
+      "uploadedAt": "2025-12-10T03:16:50.015Z",
+      "timeZone": "Asia/Bangkok",
+      "folderName": null
     }
-  ]
+  ],
+  "tokens": []
 }
