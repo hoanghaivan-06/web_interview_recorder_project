@@ -35,7 +35,183 @@ const sessionIdInput = document.getElementById("sessionIdInput");
 const sessionEndedAtEl = document.getElementById("sessionEndedAt");
 
 // NEW: token + candidate inputs
-const tokenInput = document.getElementById("tokenInput");
+
+// ==== PRESERVE TOKEN UNTIL ENDSESSION ====
+// Chặn mọi gán programmatic lên tokenInput.value cho tới khi endSession gọi _disablePreserve()
+// NEW: allow reattach if input is replaced in DOM
+let tokenInput = document.getElementById("tokenInput");
+
+// Attach preserve logic to a given element
+function attachPreserveTo(el) {
+  if (!el) return;
+
+  // avoid double-attach
+  if (el._preserveAttached) return;
+  el._preserveAttached = true;
+
+  // default preserve on this element
+  el.dataset.preserve = el.dataset.preserve || "1";
+
+  const originalDesc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value");
+
+  // helper to seed lastValidToken safely
+  try {
+    const initial = (originalDesc && typeof originalDesc.get === "function") ? originalDesc.get.call(el) : (el.value || "");
+    if (isValidTokenFormatClient((initial || "").trim())) el.dataset.lastValidToken = (initial || "").trim();
+  } catch (e) {}
+
+  if (!originalDesc || typeof originalDesc.get !== "function" || typeof originalDesc.set !== "function") {
+    // fallback: update on input and prevent clear by restoring
+    const inputHandler = () => {
+      const cur = (el.value || "").trim();
+      if (isValidTokenFormatClient(cur)) el.dataset.lastValidToken = cur;
+      if (el.dataset.preserve === "1" && (!cur || cur === "")) {
+        el.value = el.dataset.lastValidToken || "";
+        console.warn("[preserveToken fallback] restored token value (input cleared)");
+        console.trace();
+      }
+    };
+    el.addEventListener("input", inputHandler);
+    el._preserveCleanup = () => { el.removeEventListener("input", inputHandler); };
+    return;
+  }
+
+  // defineProperty on this element only
+  try {
+    Object.defineProperty(el, "value", {
+      configurable: true,
+      enumerable: true,
+      get: function() {
+        return originalDesc.get.call(this);
+      },
+      set: function(v) {
+        const incoming = (v == null) ? "" : String(v);
+        const preserve = this.dataset.preserve === "1";
+
+        if (preserve && (!incoming || incoming.trim() === "")) {
+          console.warn("[preserveToken] prevented clearing token; kept lastValidToken:", this.dataset.lastValidToken || "");
+          console.trace();
+          originalDesc.set.call(this, this.dataset.lastValidToken || "");
+          return;
+        }
+
+        if (isValidTokenFormatClient(incoming)) {
+          this.dataset.lastValidToken = incoming;
+          this.dataset.preserve = "1";
+        }
+
+        originalDesc.set.call(this, incoming);
+      }
+    });
+  } catch (err) {
+    console.error("[preserveToken] defineProperty failed:", err);
+  }
+
+  // input listener to update lastValidToken when user types
+  const inputListener = () => {
+    const cur = (el.value || "").trim();
+    if (isValidTokenFormatClient(cur)) el.dataset.lastValidToken = cur;
+    if (el.dataset.preserve === "1" && (!cur || cur === "")) {
+      // restore visible value
+      try { el.value = el.dataset.lastValidToken || ""; } catch (e) {}
+      console.warn("[preserveToken input] restored token after user attempted to clear");
+    }
+  };
+  el.addEventListener("input", inputListener);
+
+  // MutationObserver to catch setAttribute('value', '') cases
+  try {
+    const mo = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.type === "attributes" && m.attributeName === "value") {
+          const attrVal = el.getAttribute("value");
+          if (el.dataset.preserve === "1" && (!attrVal || attrVal.trim() === "")) {
+            el.setAttribute("value", el.dataset.lastValidToken || "");
+            try { el.value = el.dataset.lastValidToken || ""; } catch (e) {}
+            console.warn("[preserveToken MO] prevented attribute value clear");
+            console.trace();
+          }
+        }
+      }
+    });
+    mo.observe(el, { attributes: true, attributeFilter: ["value"] });
+    el._preserveMO = mo;
+  } catch (e) {}
+
+  // cleanup method to restore original descriptor and disconnect observers/listeners
+  el._disablePreserve = function() {
+    try {
+      if (el._preserveMO && typeof el._preserveMO.disconnect === "function") el._preserveMO.disconnect();
+      el.removeEventListener("input", inputListener);
+      // restore original descriptor on this element
+      Object.defineProperty(el, "value", originalDesc);
+      el.dataset.preserve = "0";
+    } catch (e) {
+      el.dataset.preserve = "0";
+    } finally {
+      el._preserveAttached = false;
+    }
+  };
+
+  // small cleanup store
+  el._preserveCleanup = () => {
+    try {
+      if (el._preserveMO && typeof el._preserveMO.disconnect === "function") el._preserveMO.disconnect();
+      el.removeEventListener("input", inputListener);
+    } catch (e) {}
+  };
+}
+
+// Initial attach if element exists on load
+if (tokenInput) {
+  attachPreserveTo(tokenInput);
+}
+
+// Observe document for replacements/additions of the token input
+try {
+  const bodyObserver = new MutationObserver((mutations) => {
+    // quick lookup each mutation batch instead of per-mutation heavy work
+    const current = document.getElementById("tokenInput");
+    if (current && current !== tokenInput) {
+      // a new element appeared or old was replaced
+      console.log("[preserveToken observer] detected new #tokenInput, re-attaching preserve");
+      // if previous existed, try disabling it
+      try { if (tokenInput && typeof tokenInput._disablePreserve === "function") tokenInput._disablePreserve(); } catch (e) {}
+      tokenInput = current;
+      attachPreserveTo(tokenInput);
+    } else if (!current && tokenInput) {
+      // tokenInput removed from DOM
+      console.warn("[preserveToken observer] #tokenInput removed from DOM (will reattach when it reappears)");
+    }
+  });
+
+  // observe subtree changes (childList + subtree) — we keep cheap checks
+  bodyObserver.observe(document.body || document.documentElement, { childList: true, subtree: true });
+  // store it so we can disconnect later if needed
+  window._tokenPreserveBodyObserver = bodyObserver;
+} catch (e) {
+  console.warn("[preserveToken] body observer failed", e);
+}
+
+// also expose a helper to force reattach manually (for debugging)
+window._reapplyTokenPreserve = function() {
+  try {
+    const cur = document.getElementById("tokenInput");
+    if (cur && cur !== tokenInput) {
+      try { if (tokenInput && typeof tokenInput._disablePreserve === "function") tokenInput._disablePreserve(); } catch (e) {}
+      tokenInput = cur;
+      attachPreserveTo(tokenInput);
+      console.log("[preserveToken] manual reattach done");
+    } else if (cur) {
+      attachPreserveTo(cur);
+      console.log("[preserveToken] manual attach done");
+    } else {
+      console.warn("[preserveToken] manual reattach: tokenInput not found");
+    }
+  } catch (e) { console.error(e); }
+};
+
+
 const candidateInput = document.getElementById("candidateInput");
 
 // Continue DOM vars
@@ -76,13 +252,28 @@ if (tokenInput) {
     if (btnInit) btnInit.disabled = true;
   }
 
-  tokenInput.addEventListener("input", (e) => {
+   tokenInput.addEventListener("input", (e) => {
     const v = (e.target.value || "").trim();
-    if (isValidTokenFormatClient(v)) {
+    const isValid = isValidTokenFormatClient(v);
+    
+    if (isValid) {
       if (btnInit) btnInit.disabled = false;
       tokenInput.classList.remove("error");
+      
+      // Chỉ xóa sessionId nếu token thay đổi (dùng flag để check)
+      // Nếu user chỉ đang nhập token lần đầu, đừng xóa
+      const oldToken = tokenInput.dataset.lastValidToken || "";
+      if (oldToken && oldToken !== v && sessionIdInput && sessionIdInput.value) {
+        console.log("[token input] Clearing old sessionId because token changed");
+        sessionIdInput.value = "";
+        sessionIdInput.dispatchEvent(new Event("change", { bubbles: true }));
+        sessionEnded = false;
+      }
+      tokenInput.dataset.lastValidToken = v;
+      tokenInput.dataset.preserve = "1";
     } else {
       if (btnInit) btnInit.disabled = true;
+      tokenInput.classList.remove("error");
     }
   });
 
@@ -305,6 +496,14 @@ btnInit?.addEventListener("click", async (e) => {
       sessionIdInput.value = sid;
       try { localStorage.setItem("ivr_last_session", sid); } catch (e) {}
 
+      try {
+        if (tokenInput) {
+          tokenInput.readOnly = true;                     // KHÓA nhưng không xóa value
+          tokenInput.dataset.lastValidToken = (tokenInput.value || "").trim();
+          tokenInput.classList.remove("error");
+        }
+      } catch (e) { console.warn("[btnInit] cannot disable tokenInput", e); }
+
       log("Tạo session thành công: " + sid);
     } catch (err) {
       console.error("Error creating session before camera:", err);
@@ -386,9 +585,17 @@ btnStop?.addEventListener("click", () => {
 // UPLOAD (with auto-create session if empty) - absolute URL
 // ========================================================
 // REPLACE btnUpload handler with this robust version
+// ========================================================
+// UPLOAD (with auto-create session if empty) - absolute URL
+// Robust handler that preserves token input until endSession()
+// ========================================================
 btnUpload?.addEventListener("click", async (e) => {
   e.preventDefault();
   console.log("[upload] user clicked upload handler start");
+
+  // Preserve token at the very beginning so nothing in this flow can clear it
+  const preservedToken = (tokenInput?.value || "").trim();
+
   if (!recordedBlob) {
     log("Không có video để upload.");
     return;
@@ -408,12 +615,12 @@ btnUpload?.addEventListener("click", async (e) => {
     return;
   }
 
-  // If sessionId empty -> create one (must have token)
-  if (!sessionId) {
-    try {
-      const token = (tokenInput?.value || "").trim();
-      if (!token) { alert("Bạn phải nhập token để tạo session."); return; }
-      if (!isValidTokenFormatClient(token)) { alert("Token không đúng định dạng. Định dạng hợp lệ: 1124xxxx"); return; }
+  try {
+    // If sessionId empty -> create one (must have token)
+    if (!sessionId) {
+      // ensure preservedToken exists and is valid
+      if (!preservedToken) { alert("Bạn phải nhập token để tạo session."); return; }
+      if (!isValidTokenFormatClient(preservedToken)) { alert("Token không đúng định dạng. Định dạng hợp lệ: 1124xxxx"); return; }
 
       log("SessionId rỗng — Đang tạo session mới trên server...");
       const candidate = (candidateInput?.value || "").trim() || undefined;
@@ -421,7 +628,7 @@ btnUpload?.addEventListener("click", async (e) => {
       const res = await fetch("http://127.0.0.1:3000/api/session/start", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, candidate }),
+        body: JSON.stringify({ token: preservedToken, candidate }),
       });
 
       if (!res.ok) {
@@ -432,6 +639,13 @@ btnUpload?.addEventListener("click", async (e) => {
       const data = await res.json();
       sessionId = data.sessionId;
       sessionIdInput.value = sessionId;
+
+      // Lock token input (but DO NOT clear value)
+      if (tokenInput) {
+        tokenInput.readOnly = true;
+        tokenInput.dataset.lastValidToken = preservedToken;
+        tokenInput.classList.remove("error");
+      }
 
       // persist minimal state safely
       try { saveStateToStorage(sessionId, { uploadedMap }); } catch (e) { console.warn("[upload] saveStateToStorage error", e); }
@@ -448,31 +662,25 @@ btnUpload?.addEventListener("click", async (e) => {
 
       try { localStorage.setItem("ivr_last_session", sessionId); } catch (e) {}
       log("Tạo session thành công: " + sessionId);
-    } catch (err) {
-      log("Không thể tạo session tự động: " + err.message);
-      alert("Tạo session thất bại: " + err.message);
-      return;
+    } else {
+      // If sessionId exists, ensure we don't accidentally overwrite state
+      try {
+        const restored = initStateFromStorage(sessionId);
+        uploadedMap = restored.uploadedMap || uploadedMap || {};
+        console.log("[upload] initStateFromStorage on existing session ->", restored);
+      } catch (e) {
+        console.warn("[upload] initStateFromStorage error for existing session", e);
+      }
     }
-  } else {
-    // If sessionId exists, ensure we don't accidentally overwrite state
-    try {
-      const restored = initStateFromStorage(sessionId);
-      uploadedMap = restored.uploadedMap || uploadedMap || {};
-      console.log("[upload] initStateFromStorage on existing session ->", restored);
-    } catch (e) {
-      console.warn("[upload] initStateFromStorage error for existing session", e);
-    }
-  }
 
-  // Now upload
-  if (btnUpload) btnUpload.disabled = true;
-  if (btnStart) btnStart.disabled = true;
-  if (btnStop) btnStop.disabled = true;
-  if (downloadLink) downloadLink.textContent = "Đang upload...";
+    // Now upload
+    if (btnUpload) btnUpload.disabled = true;
+    if (btnStart) btnStart.disabled = true;
+    if (btnStop) btnStop.disabled = true;
+    if (downloadLink) downloadLink.textContent = "Đang upload...";
 
-  const file = new File([recordedBlob], `q${state.currentQuestion}.webm`, { type: "video/webm" });
+    const file = new File([recordedBlob], `q${state.currentQuestion}.webm`, { type: "video/webm" });
 
-  try {
     const currentQnum = state.currentQuestion;
     console.log("[upload] starting upload file q", currentQnum, "to session", sessionId);
 
@@ -543,9 +751,21 @@ btnUpload?.addEventListener("click", async (e) => {
     if (btnUpload) btnUpload.disabled = false;
     if (downloadLink) downloadLink.textContent = "Upload thất bại.";
   } finally {
+    // Always restore token value & ensure it's locked (so upload flow never clears it)
+    try {
+      if (tokenInput) {
+        tokenInput.readOnly = true;                // restore if anything accidentally cleared it                       // keep locked during session
+        tokenInput.dataset.lastValidToken = preservedToken;
+        
+      }
+    } catch (e) {
+      console.warn("[upload finally] cannot restore tokenInput", e);
+    }
+
     if (btnStart) btnStart.disabled = false;
   }
 });
+
 
 
 // ========================================================
@@ -553,8 +773,11 @@ btnUpload?.addEventListener("click", async (e) => {
 // ========================================================
 const ARCHIVE_ON_END = true;
 
+// ---------------------------
+// 1) REPLACE whole endSession() with this
+// ---------------------------
 async function endSession() {
-  const sessionId = (sessionIdInput.value || "").trim();
+  const sessionId = (sessionIdInput && (sessionIdInput.value || "").trim()) || "";
 
   if (!sessionId) {
     alert("Chưa có sessionId — không thể kết thúc phiên.");
@@ -569,6 +792,11 @@ async function endSession() {
       btnEndSession.textContent = "Đang kết thúc...";
     }
 
+    // lấy snapshot *trước* khi archive / reset để hiển thị summary chính xác
+    const snapBefore = getSnapshot();
+    const answeredCountBefore = (snapBefore && Array.isArray(snapBefore.answered)) ? snapBefore.answered.length : 0;
+    const uploadedCountBefore = Object.keys(uploadedMap || {}).length;
+
     const res = await fetch("http://127.0.0.1:3000/api/session/end", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -576,9 +804,7 @@ async function endSession() {
     });
 
     let data = null;
-    try {
-      data = await res.json();
-    } catch (e) { /* ignore */ }
+    try { data = await res.json(); } catch (e) { /* ignore */ }
 
     if (!res.ok) {
       const msg = (data && data.message) || res.statusText || "Lỗi khi kết thúc phiên";
@@ -619,38 +845,69 @@ async function endSession() {
       }
     }
 
-    // show summary (unchanged)
-    const snap = getSnapshot();
-    const answeredCount = snap.answered.length;
-    const uploadedCount = Object.keys(uploadedMap || {}).length;
-    let msg = `Phiên ${sessionId} đã kết thúc.\nCâu đã trả lời: ${answeredCount}\nFiles uploaded: ${uploadedCount}`;
+    // --- NEW CLEANUP: ensure ended session is fully cleared and UI ready for new session ---
+    try {
+      // remove the last-session pointer so auto-fill won't bring back the ended session
+      try { localStorage.removeItem("ivr_last_session"); } catch (e) {}
+
+      // enable & clear sessionId input so user can create a new session immediately
+      if (sessionIdInput) {
+        sessionIdInput.value = "";
+        sessionIdInput.disabled = false; // allow typing if it was disabled
+
+        // dispatch programmatic change so handler knows it's programmatic (not user)
+        sessionIdInput.dispatchEvent(new CustomEvent("change", { bubbles: true, composed: true, detail: { programmatic: true } }));
+      }
+
+      // make sure init button visible & enabled
+      if (btnInit) {
+        btnInit.style.display = "";
+        btnInit.disabled = false;
+      }
+
+      // reset in-memory state (keep snapshot shown because we didn't call resetState() here)
+      uploadedMap = {};
+      try { resetState(); } catch (e) { console.warn("resetState error", e); }
+      renderState();
+    } catch (e) {
+      console.warn("[endSession] new-session cleanup error", e);
+    }
+
+    // show summary (use counts from before archive to avoid 0/0 after reset)
+    let msg = `Phiên ${sessionId} đã kết thúc.\nCâu đã trả lời: ${answeredCountBefore}\nFiles uploaded: ${uploadedCountBefore}`;
     if (data && data.exportUrl) msg += `\nTải: ${data.exportUrl}`;
 
     log(msg);
-    alert("Kết thúc phiên thành công!\n\n" + `Câu: ${answeredCount}, Upload: ${uploadedCount}`);
+    alert("Kết thúc phiên thành công!\n\n" + `Câu: ${answeredCountBefore}, Upload: ${uploadedCountBefore}`);
 
-    // =========================
-    // NEW: prepare UI for a new session (do NOT hide btnInit)
-    // =========================
+    // Reset token input & focus to encourage creating a fresh session
     try {
-      // do not hide btnInit; instead enable it so user can create a new session immediately
-      if (btnInit) {
-        btnInit.style.display = ""; // ensure visible
-        btnInit.disabled = false;
+      if (tokenInput && typeof tokenInput._disablePreserve === "function") {
+        try { tokenInput._disablePreserve(); } catch (e) { console.warn("[endSession] _disablePreserve failed", e); }
       }
-      // Clear the current sessionId input so user doesn't accidentally reuse ended session
-      if (sessionIdInput) {
-        sessionIdInput.value = "";
+      if (tokenInput) {
+        tokenInput.dataset.preserve = "0";                // ← disable preserve FIRST
+        tokenInput.dataset.lastValidToken = "";           // ← then clear flag
+        tokenInput.readOnly = false;                      // ← then unlock
+        tokenInput.value = "";                            // ← finally clear value (now it can clear)
+        tokenInput.classList.remove("error");
+        if (btnInit && !isValidTokenFormatClient(tokenInput.value)) {
+          btnInit.disabled = true;
+        }
+        tokenInput.focus();
       }
-      // Reset in-memory state and uploadedMap so UI becomes ready for new session
-      try { resetState(); } catch (e) { console.warn("resetState error", e); }
-      uploadedMap = {};
-      renderState();
-
-      // Optionally focus token input to encourage creating new session
-      try { if (tokenInput) { tokenInput.focus(); } } catch (e) {}
     } catch (e) {
-      console.warn("[endSession] post-end UI cleanup error", e);
+      console.warn("[endSession] cannot reset token input", e);
+    }
+
+    // Reset btnEndSession button state
+    try {
+      if (btnEndSession) {
+        btnEndSession.disabled = true;
+        btnEndSession.textContent = "Kết thúc phiên";
+      }
+    } catch (e) {
+      console.warn("[endSession] cannot reset button", e);
     }
 
   } catch (err) {
@@ -663,39 +920,77 @@ async function endSession() {
   }
 }
 
+
+
 // ========================================================
 // ATTACH EVENTS + auto-fill last session (safe)
 // ========================================================
-window.addEventListener("DOMContentLoaded", () => {
+// ========================================================
+// ATTACH EVENTS + auto-fill last session (safe, robust)
+// ========================================================
+// ---------------------------
+// 2) REPLACE whole DOMContentLoaded handler with this (robust session change handler)
+// ---------------------------
+window.addEventListener("DOMContentLoaded", async () => {
   if (btnEndSession) btnEndSession.addEventListener("click", endSession);
 
   // Attach the session change listener FIRST so programmatic dispatch or auto-fill triggers it
   sessionIdInput?.addEventListener("change", async (e) => {
-    const v = (e.target.value || "").trim();
-    console.log("[session change] value=", v);
+    // determine value robustly and detect manual vs programmatic
+    const v = (e && e.target ? (e.target.value || "") : (sessionIdInput ? (sessionIdInput.value || "") : "")).trim();
+    const isManual = !!(e && e.isTrusted);
+    const isProgrammatic = !!(e && e.detail && e.detail.programmatic);
+
+    console.log("[session change] value=", v, "isManual=", isManual, "isProgrammatic=", isProgrammatic);
 
     if (!v) {
-      // --- PATCH: don't resetState() on programmatic clears (only reset when user manually cleared) ---
-      if (e && e.isTrusted) {
+  // user manually cleared -> reset internal state fully (fresh UI)
+      if (isManual) {
+        console.log("[session change] manual clear -> full reset");
         resetState();
         uploadedMap = {};
-        renderState();
-        return;
-      } else {
-        // programmatic clear -> just clear uploadedMap but keep current state
-        uploadedMap = {};
+        sessionEnded = false;
+        try { if (btnInit) btnInit.disabled = true; } catch (e) {}
+        try { if (tokenInput) tokenInput.readOnly = false; } catch (e) {}
         renderState();
         return;
       }
+
+  // programmatic clear -> keep snapshot visible, just clear uploadedMap to avoid mismatch
+      if (isProgrammatic) {
+        console.log("[session change] programmatic clear -> clear uploadedMap and reopen UI");
+        uploadedMap = {};
+    // IMPORTANT FIX: allow creating a new session after programmatic clear
+        sessionEnded = false;
+        try { if (btnInit) btnInit.disabled = false; } catch (e) {}
+        try { if (tokenInput) tokenInput.readOnly = false; } catch (e) {}
+        renderState();
+        return;
+      }
+
+  // fallback
+      console.log("[session change] clear (fallback) -> clearing uploadedMap");
+      uploadedMap = {};
+      sessionEnded = false;
+      try { if (btnInit) btnInit.disabled = false; } catch (e) {}
+      try { if (tokenInput) tokenInput.readOnly = false; } catch (e) {}
+      renderState();
+      return;
     }
+
 
     // 1) Try server first (authoritative)
     const serverResult = await restoreFromServer(v);
-    console.log("[session change] serverResult:", serverResult); // debug log to detect unexpected finished flag
+    console.log("[session change] serverResult:", serverResult);
     uploadedMap = serverResult.uploadedMap || {};
 
-    // if server says finished -> ensure we load the stored state into internal state, then block recording UI
+    // If server reports session finished -> do NOT auto-block UI.
+    // Instead: inform user, remove the ivr_last_session so we won't auto-fill it again,
+    // and load non-blocking local state if any (but don't set sessionEnded=true).
     if (serverResult.finished) {
+      console.warn("[session] server says finished for", v);
+
+      // Try to init local storage state for inspection (but do not block UI)
       try {
         const restored = initStateFromStorage(v);
         uploadedMap = restored.uploadedMap || uploadedMap || {};
@@ -704,25 +999,28 @@ window.addEventListener("DOMContentLoaded", () => {
         console.warn("[session] cannot initStateFromStorage for finished session", e);
       }
 
-      sessionEnded = true;
+      // Remove the last-session pointer so we don't auto-fill again
+      try { localStorage.removeItem("ivr_last_session"); } catch (e) { /* ignore */ }
+
+      // Keep sessionEnded = false so user can create a new session
+      sessionEnded = false;
       stopMediaCompletely();
 
+      // Ensure recording UI is enabled for creating a new session
       try {
-        if (btnInit) btnInit.style.display = "none";
-        if (btnStart) btnStart.disabled = true;
+        if (btnStart) btnStart.disabled = true; // require init first
         if (btnStop) btnStop.disabled = true;
         if (btnUpload) btnUpload.disabled = true;
         if (btnEndSession) btnEndSession.disabled = true;
+        if (btnInit) btnInit.disabled = false;
+        if (tokenInput) tokenInput.readOnly = false;
       } catch (e) {}
 
-      if (serverResult.endedAt && sessionEndedAtEl) {
-        sessionEndedAtEl.textContent = "Phiên kết thúc: " + new Date(serverResult.endedAt).toLocaleString();
-      } else if (sessionEndedAtEl) {
-        sessionEndedAtEl.textContent = "Phiên đã kết thúc.";
-      }
+      // Inform the user without blocking them
+      alert("Phiên trước đã kết thúc. Bạn có thể tạo phiên mới bằng cách nhập token và bấm 'Xin quyền camera'.");
 
       renderState();
-      console.log("[session] restored and blocked because finished on server", v);
+      console.log("[session] ignored finished session (auto-fill prevented)", v);
       return;
     }
 
@@ -742,7 +1040,7 @@ window.addEventListener("DOMContentLoaded", () => {
       renderState();
       console.log("[session] restored session", v, "from server/localStorage");
     } else {
-      // if server provided answered info, make sure internal state reflects it (initStateFromStorage will also write localStorage)
+      // if server provided answered info, ensure internal state reflects it (initStateFromStorage will also write localStorage)
       if (Array.isArray(serverResult.answered) && serverResult.answered.length) {
         try {
           initStateFromStorage(v);
@@ -756,25 +1054,63 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // If there's sessionId prefilled in HTML, restore local state immediately
-  const sid = (sessionIdInput?.value || "").trim();
+  // If there's sessionId prefilled in HTML, restore local state immediately (but avoid auto-block if finished)
+  const sid = (sessionIdInput && (sessionIdInput.value || "").trim()) || "";
   if (sid) {
-    const restored = initStateFromStorage(sid);
-    uploadedMap = restored.uploadedMap || {};
-    renderState();
-    console.log('[init] restored prefilled session', sid);
+    try {
+      const serverResult = await restoreFromServer(sid);
+      if (serverResult.finished) {
+        console.log('[init] prefilled session is finished, not auto-blocking', sid);
+        try { localStorage.removeItem("ivr_last_session"); } catch (e) {}
+        try {
+          const restored = initStateFromStorage(sid);
+          uploadedMap = restored.uploadedMap || {};
+          renderState();
+        } catch (e) { console.warn("[init] could not initStateFromStorage for finished prefilled", e); }
+      } else {
+        try {
+          const restored = initStateFromStorage(sid);
+          uploadedMap = restored.uploadedMap || {};
+          renderState();
+        } catch (e) {
+          console.warn('[init] initStateFromStorage failed, but continuing', e);
+        }
+        console.log('[init] restored prefilled session', sid);
+      }
+    } catch (e) {
+      // fallback: try local restore
+      try {
+        const restored = initStateFromStorage(sid);
+        uploadedMap = restored.uploadedMap || {};
+        renderState();
+      } catch (err) {
+        console.warn('[init] cannot restore prefilled session', sid, err);
+      }
+    }
   }
 
   // try auto-fill last session (but if server shows finished, don't auto-start camera)
   try {
     const last = localStorage.getItem("ivr_last_session");
-    if (last && !sessionIdInput.value) {
-      console.log("[init] auto-fill last session", last);
-      // set value and *call the change handler* by dispatching change now that listener is attached
-      sessionIdInput.value = last;
-      sessionIdInput.dispatchEvent(new Event("change"));
+    const currentToken = (tokenInput?.value || "").trim();
+    // Only auto-fill if: no sessionId AND no token entered (user just opened page)
+    if (last && !(sessionIdInput && sessionIdInput.value) && !currentToken) {
+      console.log("[init] auto-fill last session (checking finished first)", last);
+      const serverResult = await restoreFromServer(last);
+      if (serverResult.finished) {
+        console.log("[init] last session is finished -> clearing ivr_last_session and not auto-filling", last);
+        try { localStorage.removeItem("ivr_last_session"); } catch (e) {}
+      } else {
+        if (sessionIdInput) {
+          sessionIdInput.value = last;
+          sessionIdInput.dispatchEvent(new CustomEvent("change", { bubbles: true, composed: true, detail: { programmatic: true } }));
+        }
+      }
     }
   } catch (e) {
     console.warn("[init] cannot auto-fill last session", e);
   }
 });
+
+
+
